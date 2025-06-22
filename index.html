@@ -33,7 +33,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 3em;
+    font-size: 4em; /* büyüttük burayı */
     font-weight: 600;
     text-align: center;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
@@ -41,6 +41,13 @@
     user-select: none;
     white-space: nowrap;
     min-width: 300px;
+    font-family: monospace; /* daha "typewriter" hissi için */
+  }
+  #static-part {
+    display: inline;
+  }
+  #dynamic-part {
+    display: inline;
   }
 </style>
 </head>
@@ -50,20 +57,58 @@
     Your browser does not support the video tag.
   </video>
 
-  <div id="text-container">I am a Geomatics Engineer,</div>
+  <div id="text-container">
+    <span id="static-part">I am a </span><span id="dynamic-part"></span>
+  </div>
 
   <script>
     const texts = [
-      "I am a Geomatics Engineer,",
-      "I am a GIS Engineer,",
-      "I am a GIS Developer,"
+      "Geomatics Enginee,",
+      "GIS Engineer",
+      "GIS Developer"
     ];
-    let currentIndex = 0;
-    const container = document.getElementById('text-container');
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % texts.length;
-      container.textContent = texts[currentIndex];
-    }, 5000);
+
+    const staticPart = document.getElementById('static-part');
+    const dynamicPart = document.getElementById('dynamic-part');
+
+    let currentTextIndex = 0;
+    let charIndex = 0;
+
+    const typingSpeed = 100;  // harf başına yazma hızı (ms)
+    const pauseAfterTyping = 3000; // tamamlandıktan sonra bekleme (ms)
+    const deletingSpeed = 50;  // harf başına silme hızı (ms)
+
+    function typeText(text, callback) {
+      if (charIndex < text.length) {
+        dynamicPart.textContent += text.charAt(charIndex);
+        charIndex++;
+        setTimeout(() => typeText(text, callback), typingSpeed);
+      } else {
+        setTimeout(callback, pauseAfterTyping);
+      }
+    }
+
+    function deleteText(callback) {
+      if (charIndex > 0) {
+        dynamicPart.textContent = dynamicPart.textContent.slice(0, -1);
+        charIndex--;
+        setTimeout(() => deleteText(callback), deletingSpeed);
+      } else {
+        callback();
+      }
+    }
+
+    function loop() {
+      const currentText = texts[currentTextIndex];
+      typeText(currentText, () => {
+        deleteText(() => {
+          currentTextIndex = (currentTextIndex + 1) % texts.length;
+          loop();
+        });
+      });
+    }
+
+    loop();
   </script>
 </body>
 </html>
