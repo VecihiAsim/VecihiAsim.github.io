@@ -1,10 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>Video Test</title></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geomatics Engineer</title>
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      background: black;
+    }
+    #bg-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      object-fit: cover;
+      filter: brightness(0.6);
+    }
+    #text-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      font-weight: 600;
+      text-align: center;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+      user-select: none;
+      white-space: nowrap;
+      min-width: 300px;
+    }
+  </style>
+</head>
 <body>
-  <video autoplay muted loop controls width="600">
-    <source src="spining_globe.mp4" type="video/mp4">
-    Video not supported.
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="spining_globe.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
   </video>
+
+  <div id="text-container">I am a Geomatics Engineer,</div>
+
+  <script>
+    const texts = [
+      "I am a Geomatics Engineer",
+      "I am a GIS Engineer",
+      "I am a GIS Developer"
+    ];
+
+    let currentIndex = 0;
+    const container = document.getElementById('text-container');
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % texts.length;
+      container.textContent = texts[currentIndex];
+    }, 5000);
+  </script>
 </body>
 </html>
