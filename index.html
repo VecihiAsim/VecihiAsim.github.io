@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Geomatics Engineer</title>
 <style>
+  /* --- Genel Stil --- */
   html, body {
-    margin: 0; padding: 0; height: 100%;
-    overflow: hidden;
-    background: black;
+    margin: 0; padding: 0;
+    height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
+    background: black;
+    scroll-behavior: smooth;
   }
   body::before {
     content: "";
@@ -28,12 +30,14 @@
     z-index: 0;
     pointer-events: none;
   }
+
+  /* --- Yazı animasyonu --- */
   #text-container {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 4em; /* büyüttük burayı */
+    font-size: 4em;
     font-weight: 600;
     text-align: center;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
@@ -41,17 +45,89 @@
     user-select: none;
     white-space: nowrap;
     min-width: 300px;
-    font-family: monospace; /* daha "typewriter" hissi için */
+    font-family: monospace;
   }
-  #static-part {
+  #static-part, #dynamic-part {
     display: inline;
   }
-  #dynamic-part {
-    display: inline;
+
+  /* --- Resume bölümü --- */
+  #resume-section {
+    position: relative;
+    margin-top: 100vh; /* Video ve yazıdan sonra, sayfanın tam altına */
+    min-height: 100vh;
+    background-color: #111;
+    display: flex;
+    align-items: center;
+    padding: 40px 10vw;
+    gap: 40px;
+    box-sizing: border-box;
+  }
+
+  /* Fotoğraf ve altında contact kutusu */
+  #photo-contact {
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #photo-contact img {
+    width: 180px;
+    height: auto;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    object-fit: cover;
+    margin-bottom: 30px;
+  }
+
+  /* Contact bilgileri kutusu */
+  #contact-info {
+    width: 100%;
+  }
+  #contact-info h2 {
+    margin: 0 0 20px 0;
+    font-weight: 700;
+    font-size: 1.8em;
+    color: #44c8f5;
+    text-align: center;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #ccc;
+  }
+  .contact-item svg {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    fill: #44c8f5;
+  }
+  .contact-link {
+    color: #44c8f5;
+    text-decoration: none;
+  }
+  .contact-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive küçük ekranlar için */
+  @media(max-width: 700px) {
+    #resume-section {
+      flex-direction: column;
+      padding: 30px 5vw;
+      gap: 20px;
+    }
+    #photo-contact {
+      flex: none;
+    }
   }
 </style>
 </head>
 <body>
+
   <video id="bg-video" autoplay muted loop playsinline>
     <source src="spining_globe.mp4" type="video/mp4" />
     Your browser does not support the video tag.
@@ -60,6 +136,44 @@
   <div id="text-container">
     <span id="static-part">I am a </span><span id="dynamic-part"></span>
   </div>
+
+  <!-- Resume Bölümü -->
+  <section id="resume-section">
+    <div id="photo-contact">
+      <img src="resume.png" alt="My Photo" />
+      <div id="contact-info">
+        <h2>Contact</h2>
+        <div class="contact-item">
+          <!-- Telefon ikonu -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.55.57 1 1 0 011 1v3.4a1 1 0 01-1 1A18 18 0 013 6a1 1 0 011-1h3.4a1 1 0 011 1 11.36 11.36 0 00.57 3.55 1 1 0 01-.21 1.11z"/>
+          </svg>
+          <span>+90 505 706 65 55</span>
+        </div>
+        <div class="contact-item">
+          <!-- Mail ikonu -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
+          </svg>
+          <a href="mailto:vecihikrtgl@gmail.com" class="contact-link">vecihikrtgl@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <!-- Location ikonu -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/>
+          </svg>
+          <span>Turkey</span>
+        </div>
+        <div class="contact-item">
+          <!-- LinkedIn ikonu -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4.98 3.5a2.5 2.5 0 11.001 5.001A2.5 2.5 0 014.98 3.5zM4 8h2v12H4zM8 8h2v1.71c.27-.5 1-1.71 2.72-1.71 2.94 0 3.48 1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2.01 1.36-2.01 2.75V20H8z"/>
+          </svg>
+          <a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" class="contact-link">in/vecihiasimkartoglu</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <script>
     const texts = [
@@ -110,5 +224,6 @@
 
     loop();
   </script>
+
 </body>
 </html>
