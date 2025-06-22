@@ -1,11 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Vecihi Kartoglu</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geomatics Engineer</title>
+  <style>
+    /* Sayfa tam ekran, margin ve padding yok */
+    html, body {
+      margin: 0; padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      background: black;
+    }
+    /* Video tam ekran, arka planda sabit */
+    #bg-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1;
+      object-fit: cover;
+      filter: brightness(0.6); /* Videoyu biraz karart */
+    }
+    /* Yazı kutusu ortada */
+    #text-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      font-weight: 600;
+      text-align: center;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+      user-select: none;
+      white-space: nowrap;
+      min-width: 300px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Merhaba, ben Vecihi!</h1>
-  <p>Bu benim kişisel GitHub sayfam.</p>
+  <video id="bg-video" autoplay muted loop>
+    <source src="spining_globe.mp4" type="video/mp4" />
+    Tarayıcınız video etiketini desteklemiyor.
+  </video>
+
+  <div id="text-container">Geomatics mühendisiyim,</div>
+
+  <script>
+    const texts = [
+      "Geomatics mühendisiyim,",
+      "GIS Engineer'ım,",
+      "GIS Developer'ım,"
+    ];
+
+    let currentIndex = 0;
+    const container = document.getElementById('text-container');
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % texts.length;
+      container.textContent = texts[currentIndex];
+    }, 5000); // 5000 ms = 5 saniye
+  </script>
 </body>
 </html>
