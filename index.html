@@ -12,15 +12,20 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
   }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: black;
+    z-index: -1;
+  }
   #bg-video {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
     object-fit: cover;
-    z-index: -1;
-    filter: brightness(0.6);
+    z-index: 0;
     pointer-events: none;
   }
   #text-container {
