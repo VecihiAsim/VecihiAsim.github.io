@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Geomatics Engineer</title>
 <style>
-  /* --- Genel Stil --- */
+  /* Genel ayarlar */
   html, body {
     margin: 0; padding: 0;
     height: 100%;
@@ -31,7 +31,7 @@
     pointer-events: none;
   }
 
-  /* --- Yazı animasyonu --- */
+  /* Yazı animasyonu */
   #text-container {
     position: fixed;
     top: 50%;
@@ -51,10 +51,10 @@
     display: inline;
   }
 
-  /* --- Resume bölümü --- */
+  /* Resume bölümü */
   #resume-section {
     position: relative;
-    margin-top: 100vh; /* Video ve yazıdan sonra, sayfanın tam altına */
+    margin-top: 100vh; /* Video ve yazıdan sonra alt kısmı oluşturur */
     min-height: 100vh;
     background-color: #111;
     display: flex;
@@ -64,7 +64,6 @@
     box-sizing: border-box;
   }
 
-  /* Fotoğraf ve altında contact kutusu */
   #photo-contact {
     flex: 0 0 250px;
     display: flex;
@@ -80,7 +79,6 @@
     margin-bottom: 30px;
   }
 
-  /* Contact bilgileri kutusu */
   #contact-info {
     width: 100%;
   }
@@ -113,7 +111,6 @@
     text-decoration: underline;
   }
 
-  /* Responsive küçük ekranlar için */
   @media(max-width: 700px) {
     #resume-section {
       flex-direction: column;
@@ -137,35 +134,30 @@
     <span id="static-part">I am a </span><span id="dynamic-part"></span>
   </div>
 
-  <!-- Resume Bölümü -->
   <section id="resume-section">
     <div id="photo-contact">
       <img src="resume.png" alt="My Photo" />
       <div id="contact-info">
         <h2>Contact</h2>
         <div class="contact-item">
-          <!-- Telefon ikonu -->
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.55.57 1 1 0 011 1v3.4a1 1 0 01-1 1A18 18 0 013 6a1 1 0 011-1h3.4a1 1 0 011 1 11.36 11.36 0 00.57 3.55 1 1 0 01-.21 1.11z"/>
           </svg>
           <span>+90 505 706 65 55</span>
         </div>
         <div class="contact-item">
-          <!-- Mail ikonu -->
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
           </svg>
           <a href="mailto:vecihikrtgl@gmail.com" class="contact-link">vecihikrtgl@gmail.com</a>
         </div>
         <div class="contact-item">
-          <!-- Location ikonu -->
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/>
           </svg>
           <span>Turkey</span>
         </div>
         <div class="contact-item">
-          <!-- LinkedIn ikonu -->
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4.98 3.5a2.5 2.5 0 11.001 5.001A2.5 2.5 0 014.98 3.5zM4 8h2v12H4zM8 8h2v1.71c.27-.5 1-1.71 2.72-1.71 2.94 0 3.48 1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2.01 1.36-2.01 2.75V20H8z"/>
           </svg>
@@ -175,55 +167,65 @@
     </div>
   </section>
 
-  <script>
-    const texts = [
-      "Geomatics Engineer",
-      "GIS Engineer",
-      "GIS Developer"
-    ];
+<script>
+  const texts = [
+    "Geomatics Engineer",
+    "GIS Engineer",
+    "GIS Developer"
+  ];
 
-    const staticPart = document.getElementById('static-part');
-    const dynamicPart = document.getElementById('dynamic-part');
+  const staticPart = document.getElementById('static-part');
+  const dynamicPart = document.getElementById('dynamic-part');
+  const textContainer = document.getElementById('text-container');
 
-    let currentTextIndex = 0;
-    let charIndex = 0;
+  let currentTextIndex = 0;
+  let charIndex = 0;
 
-    const typingSpeed = 100;  // harf başına yazma hızı (ms)
-    const pauseAfterTyping = 3000; // tamamlandıktan sonra bekleme (ms)
-    const deletingSpeed = 50;  // harf başına silme hızı (ms)
+  const typingSpeed = 100;  
+  const pauseAfterTyping = 3000;
+  const deletingSpeed = 50;  
 
-    function typeText(text, callback) {
-      if (charIndex < text.length) {
-        dynamicPart.textContent += text.charAt(charIndex);
-        charIndex++;
-        setTimeout(() => typeText(text, callback), typingSpeed);
-      } else {
-        setTimeout(callback, pauseAfterTyping);
-      }
+  function typeText(text, callback) {
+    if (charIndex < text.length) {
+      dynamicPart.textContent += text.charAt(charIndex);
+      charIndex++;
+      setTimeout(() => typeText(text, callback), typingSpeed);
+    } else {
+      setTimeout(callback, pauseAfterTyping);
     }
+  }
 
-    function deleteText(callback) {
-      if (charIndex > 0) {
-        dynamicPart.textContent = dynamicPart.textContent.slice(0, -1);
-        charIndex--;
-        setTimeout(() => deleteText(callback), deletingSpeed);
-      } else {
-        callback();
-      }
+  function deleteText(callback) {
+    if (charIndex > 0) {
+      dynamicPart.textContent = dynamicPart.textContent.slice(0, -1);
+      charIndex--;
+      setTimeout(() => deleteText(callback), deletingSpeed);
+    } else {
+      callback();
     }
+  }
 
-    function loop() {
-      const currentText = texts[currentTextIndex];
-      typeText(currentText, () => {
-        deleteText(() => {
-          currentTextIndex = (currentTextIndex + 1) % texts.length;
-          loop();
-        });
+  function loop() {
+    const currentText = texts[currentTextIndex];
+    typeText(currentText, () => {
+      deleteText(() => {
+        currentTextIndex = (currentTextIndex + 1) % texts.length;
+        loop();
       });
-    }
+    });
+  }
 
-    loop();
-  </script>
+  loop();
+
+  // Scroll ile yazıyı gizle/göster
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > window.innerHeight * 0.5) {
+      textContainer.style.display = 'none';
+    } else {
+      textContainer.style.display = 'block';
+    }
+  });
+</script>
 
 </body>
 </html>
