@@ -7,422 +7,456 @@
 
 <style>
 :root{
-  --accent:#6b00ff;
-  --muted:rgba(255,255,255,.82);
+  --accent:#6b00ff;
+  --muted:rgba(255,255,255,.82);
 }
 html,body{
-  margin:0;
-  padding:0;
-  width:100%;
-  height:100%;
-  background:#000;
-  color:#fff;
-  font-family:"Segoe UI",sans-serif;
-  scroll-behavior:smooth;
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#fff;
+  font-family:"Segoe UI",sans-serif;
+  scroll-behavior:smooth;
 }
 
 /* ---------------------------------------- */
-/* BACKGROUND VIDEO - always behind all   */
+/* BACKGROUND VIDEO - always behind all   */
 /* ---------------------------------------- */
 #bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -2; /* Video en arkada kalmalı */
-  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  pointer-events: none;
 }
 
 #video-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,.28);
-  z-index: -1; /* Overlay videonun önünde, içeriğin arkasında kalmalı */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.28);
+  z-index: -1;
 }
-  
+  
 
 /* ---------------------------------------- */
-/* LEFT MENU                             */
+/* LEFT MENU                             */
 /* ---------------------------------------- */
 #sidebar{
-  position:fixed;
-  left:22px;
-  top:50%;
-  transform:translateY(-50%);
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-  z-index:200;
+  position:fixed;
+  left:22px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  z-index:200;
 }
 .side-btn{
-  width:52px;
-  height:52px;
-  border-radius:12px;
-  background:rgba(20,20,20,.55);
-  border:2px solid rgba(255,255,255,.08);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  cursor:pointer;
-  transition:.25s;
+  width:52px;
+  height:52px;
+  border-radius:12px;
+  background:rgba(20,20,20,.55);
+  border:2px solid rgba(255,255,255,.08);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  transition:.25s;
 }
 .side-btn:hover{ background:var(--accent); transform:translateY(-3px); }
 .side-btn svg{ width:26px; height:26px; fill:#fff; }
 
 /* ---------------------------------------- */
-/* HERO                                   */
+/* HERO                                   */
 /* ---------------------------------------- */
 #hero{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:relative;
-  z-index:1; 
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  z-index:1; 
 }
 #text-container{
-  font-size:3.3rem;
-  font-weight:800;
-  letter-spacing:1px;
-  text-shadow:0 6px 24px rgba(0,0,0,.65);
-  font-family:monospace;
-  pointer-events:none;
+  font-size:3.3rem;
+  font-weight:800;
+  letter-spacing:1px;
+  text-shadow:0 6px 24px rgba(0,0,0,.65);
+  font-family:monospace;
+  pointer-events:none;
+  transition: opacity 0.5s ease; /* Yazı animasyonu için yumuşak geçiş */
+}
+/* İlk kodun 'static-part' ve 'dynamic-part' stillerini ekledim */
+#static-part, #dynamic-part {
+    display: inline;
 }
 
 /* ---------------------------------------- */
-/* ABOUT PAGE & SKILLS PAGE                 */
+/* ABOUT PAGE & SKILLS PAGE                 */
 /* ---------------------------------------- */
 section{
-  min-height:100vh;
-  padding:90px 9%;
-  position:relative;
-  /* z-index:5; satırı kaldırıldı veya değiştirildi */
-  /* Bu bölümlere z-index atamamak, video ve overlay'in arkasında kalmasını sağlar */
-  /* Sadece içeriklerin üstte olması için: */
-  z-index: 1; /* Video (-2) ve overlay (-1)'den daha büyük, ancak menüden (200) küçük olmalı */
-  background: rgba(0, 0, 0, 0.4); /* Arka planı hafif karartmak için ekledim, isterseniz kaldırabilirsiniz */
+  min-height:100vh;
+  padding:90px 9%;
+  position:relative;
+  z-index: 1;
 }
-/* Ek: Hero bölümü dışındaki bölümlere daha belirgin bir arka plan rengi verebilirsiniz */
+/* Background'ı daha belirgin yaptım */
 #about, #skills {
-    background-color: rgba(0, 0, 0, 0.6); /* Video üstünde kalması için biraz opaklık */
+    background-color: rgba(0, 0, 0, 0.75);
 }
 
 .heading{
-  text-align:center;
-  font-size:2.6rem;
-  font-weight:900;
+  text-align:center;
+  font-size:2.6rem;
+  font-weight:900;
 }
 
 .intro{
-  margin:auto;
-  margin-top:12px;
-  max-width:1150px;
-  text-align:center;
-  font-size:1.3rem;
-  color:var(--muted);
-  line-height:1.75;
+  margin:auto;
+  margin-top:12px;
+  max-width:1150px;
+  text-align:center;
+  font-size:1.3rem;
+  color:var(--muted);
+  line-height:1.75;
 }
 
 .sep{
-  width:92%;
-  max-width:1300px;
-  margin:28px auto;
-  border-top:1px solid rgba(255,255,255,.12);
+  width:92%;
+  max-width:1300px;
+  margin:28px auto;
+  border-top:1px solid rgba(255,255,255,.12);
 }
 
 .about-grid{
-  width:100%;
-  max-width:1250px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:400px 1fr;
-  align-items:start;
-  gap:40px;
+  width:100%;
+  max-width:1250px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:400px 1fr;
+  align-items:start;
+  gap:40px;
 }
 
 /* PHOTO */
 .profile-photo{
-  border-radius:10px;
-  overflow:hidden;
-  border:2px solid rgba(255,255,255,.12);
-  box-shadow:0 14px 38px rgba(0,0,0,.55);
+  border-radius:10px;
+  overflow:hidden;
+  border:2px solid rgba(255,255,255,.12);
+  box-shadow:0 14px 38px rgba(0,0,0,.55);
 }
 .profile-photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  aspect-ratio:3/4;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  aspect-ratio:3/4;
 }
 
 /* TEXT */
 .content{
-  font-size:1.22rem;
-  line-height:1.75;
-  color:#fff;
+  font-size:1.22rem;
+  line-height:1.75;
+  color:#fff;
 }
 .content h3{
-  margin:0 0 12px 0;
-  font-size:1.55rem;
-  font-weight:800;
+  margin:0 0 12px 0;
+  font-size:1.55rem;
+  font-weight:800;
 }
 
 .hr-strong{
-  height:3px;
-  margin:24px 0;
-  background:linear-gradient(90deg,var(--accent),rgba(107,0,255,.2));
-  border-radius:4px;
+  height:3px;
+  margin:24px 0;
+  background:linear-gradient(90deg,var(--accent),rgba(107,0,255,.2));
+  border-radius:4px;
 }
 
 .info-list{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px 26px;
-  margin-top:12px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px 26px;
+  margin-top:12px;
 }
 .info-item{
-  display:flex;
-  gap:12px;
-  font-size:1.1rem;
-  color:var(--muted);
+  display:flex;
+  gap:12px;
+  font-size:1.1rem;
+  color:var(--muted);
 }
 .info-item svg{
-  width:22px;
-  height:22px;
-  fill:var(--accent);
+  width:22px;
+  height:22px;
+  fill:var(--accent);
 }
 
 /* ---------------------------------------- */
-/* SKILLS PAGE                             */
+/* SKILLS PAGE                             */
 /* ---------------------------------------- */
 #skills-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:28px;
-  max-width:1200px;
-  margin:40px auto 0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:28px;
+  max-width:1200px;
+  margin:40px auto 0 auto;
 }
 .skill-card{
-  background:rgba(20,20,20,.45);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:10px;
-  padding:28px 22px;
-  text-align:center;
-  transition:.3s;
+  background:rgba(20,20,20,.45);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;
+  padding:28px 22px;
+  text-align:center;
+  transition:.3s;
 }
 .skill-card:hover{
-  background:var(--accent);
-  color:#fff;
-  transform:translateY(-6px);
+  background:var(--accent);
+  color:#fff;
+  transform:translateY(-6px);
 }
 .skill-card h4{
-  margin:0 0 12px 0;
-  font-size:1.4rem;
+  margin:0 0 12px 0;
+  font-size:1.4rem;
 }
 .skill-card p{
-  margin:0;
-  font-size:1rem;
-  color:var(--muted);
+  margin:0;
+  font-size:1rem;
+  color:var(--muted);
 }
 
 /* ---------------------------------------- */
-/* MEDIA QUERIES                             */
+/* MEDIA QUERIES                             */
 @media(max-width:900px){
-  .about-grid{ grid-template-columns:1fr; }
-  #text-container{ font-size:2.2rem; }
-  .info-list{ grid-template-columns:1fr; }
-  #skills-grid{ grid-template-columns:1fr; }
+  .about-grid{ grid-template-columns:1fr; }
+  #text-container{ font-size:2.2rem; }
+  .info-list{ grid-template-columns:1fr; }
+  #skills-grid{ grid-template-columns:1fr; }
 }
 </style>
 </head>
 <body>
 
 <video id="bg-video" autoplay muted loop playsinline>
-    <source src="spining_globe.webm" type="video/webm">
-    <source src="spining_globe.mp4" type="video/mp4">
-    Maalesef tarayıcınız arka plan videosunu desteklemiyor.
+    <source src="spining_globe.webm" type="video/webm">
+    <source src="spining_globe.mp4" type="video/mp4">
+    Maalesef tarayıcınız arka plan videosunu desteklemiyor.
 </video>
 <div id="video-overlay"></div>
 
 <div id="sidebar">
-  <div class="side-btn" onclick="scrollToTop()">
-    <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v7h-12v-7h-3z"/></svg>
-  </div>
-  <div class="side-btn" onclick="scrollToAbout()">
-    <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5  
-      2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10  
-      1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-  </div>
-  <div class="side-btn" onclick="scrollToSkills()">
-    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-8-4 8-4 8 4-8 4z"/></svg>
-  </div>
+    <div class="side-btn" onclick="scrollToSection('hero')">
+    <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v7h-12v-7h-3z"/></svg>
+  </div>
+  <div class="side-btn" onclick="scrollToSection('about')">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5  
+      2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10  
+      1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+  </div>
+  <div class="side-btn" onclick="scrollToSection('skills')">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-8-4 8-4 8 4-8 4z"/></svg>
+  </div>
 </div>
 
 <section id="hero">
-  <div id="text-container">
-    <span id="static-part">I am a </span><span id="dynamic-part"></span>
-  </div>
+  <div id="text-container">
+    <span id="static-part">I am a </span><span id="dynamic-part"></span>
+  </div>
 </section>
 
 <section id="about">
-  <h2 class="heading">ABOUT</h2>
-  <p class="intro">
-    I am a Geomatics Engineer with a strong passion for GIS, Spatial Data Management, Remote Sensing,
-    Computer Vision and Artificial Intelligence.  
-    I currently work as a <strong>GIS Lead | Developer</strong> focusing on spatial analysis,
-    automation, digital mapping and geodata pipelines.
-  </p>
+  <h2 class="heading">ABOUT</h2>
+  <p class="intro">
+    I am a Geomatics Engineer with a strong passion for GIS, Spatial Data Management, Remote Sensing,
+    Computer Vision and Artificial Intelligence.  
+    I currently work as a <strong>GIS Lead | Developer</strong> focusing on spatial analysis,
+    automation, digital mapping and geodata pipelines.
+  </p>
 
-  <div class="sep"></div>
+  <div class="sep"></div>
 
-  <div class="about-grid">
-    <div class="profile-photo">
-      <img src="resume.png" alt="">
-    </div>
-    <div class="content">
-      <h3>GIS • Remote Sensing • Spatial Data Science</h3>
+  <div class="about-grid">
+    <div class="profile-photo">
+      <img src="resume.png" alt="">
+    </div>
+    <div class="content">
+      <h3>GIS • Remote Sensing • Spatial Data Science</h3>
 
-      <p>
-        I develop geospatial solutions by combining engineering, data science and software development.
-        My work includes spatial data modeling, attribute/geometry editing systems, enterprise GIS setups,
-        automated workflows, quality control tools and advanced visualization dashboards.
-      </p>
+      <p>
+        I develop geospatial solutions by combining engineering, data science and software development.
+        My work includes spatial data modeling, attribute/geometry editing systems, enterprise GIS setups,
+        automated workflows, quality control tools and advanced visualization dashboards.
+      </p>
 
-      <p>
-        I also build Python-based geoprocessing tools, machine learning pipelines, imagery analysis,
-        feature extraction systems and location-intelligence applications.
-      </p>
+      <p>
+        I also build Python-based geoprocessing tools, machine learning pipelines, imagery analysis,
+        feature extraction systems and location-intelligence applications.
+      </p>
 
-      <div class="hr-strong"></div>
+      <div class="hr-strong"></div>
 
-      <div class="info-list">
-        <div class="info-item">
-    <svg viewBox="0 0 24 24"><path d="M12 2l9 4-9 4-9-4z"/></svg>
-    <div><strong>Website</strong><br>
-      <a href="https://vecihiasim.github.io/" target="_blank" style="color:var(--muted); text-decoration:underline;">
-        vecihiasim.github.io
-      </a>
-    </div>
-  </div>
+      <div class="info-list">
+        <div class="info-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2l9 4-9 4-9-4z"/></svg>
+    <div><strong>Website</strong><br>
+      <a href="https://vecihiasim.github.io/" target="_blank" style="color:var(--muted); text-decoration:underline;">
+        vecihiasim.github.io
+      </a>
+    </div>
+  </div>
 
-  <div class="info-item">
-    <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2  
-0 002-2V6a2 2 0 00-2-2zm0 2l-8  
+  <div class="info-item">
+    <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2  
+0 002-2V6a2 2 0 00-2-2zm0 2l-8  
 5-8-5h16z"/></svg>
-    <div><strong>Email</strong><br>
-      <a href="mailto:vecihikrtgl@gmail.com" style="color:var(--muted); text-decoration:underline;">
-        vecihikrtgl@gmail.com
-      </a>
-    </div>
-  </div>
+    <div><strong>Email</strong><br>
+      <a href="mailto:vecihikrtgl@gmail.com" style="color:var(--muted); text-decoration:underline;">
+        vecihikrtgl@gmail.com
+      </a>
+    </div>
+  </div>
 
-  <div class="info-item">
-    <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05  
-      15.05 0 006.59 6.59l2.2-2.2a1 1  
-      0 011.11-.21 11.36 11.36  
-      0 003.55.57 1 1 0 011 1v3.4a1  
-      1 0 01-1 1A18 18 0 013 6a1  
-      1 0 011-1h3.4a1 1 0 011  
-      1 11.36 11.36 0 00.57 3.55  
-      1 1 0 01-.21 1.11z"/></svg>
-    <div><strong>Phone</strong><br>
-      +90 505 706 65 89
-    </div>
-  </div>
+  <div class="info-item">
+    <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05  
+      15.05 0 006.59 6.59l2.2-2.2a1 1  
+      0 011.11-.21 11.36 11.36  
+      0 003.55.57 1 1 0 011 1v3.4a1  
+      1 0 01-1 1A18 18 0 013 6a1  
+      1 0 011-1h3.4a1 1 0 011  
+      1 11.36 11.36 0 00.57 3.55  
+      1 1 0 01-.21 1.11z"/></svg>
+    <div><strong>Phone</strong><br>
+      +90 505 706 65 89
+    </div>
+  </div>
 
-  <div class="info-item">
-    <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7  
-      7c0 5.25 7 13 7 13s7-7.75  
-      7-13a7 7 0 00-7-7z"/></svg>
-    <div><strong>Location</strong><br>Turkey</div>
-  </div>
+  <div class="info-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7  
+      7c0 5.25 7 13 7 13s7-7.75  
+      7-13a7 7 0 00-7-7z"/></svg>
+    <div><strong>Location</strong><br>Turkey</div>
+    </div>
 
-  <div class="info-item">
-    <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5  
-      2.5 0 11.001 5.001A2.5 2.5  
-      0 014.98 3.5zM4 8h2v12H4zM8  
-      8h2v1.71c.27-.5 1-1.71  
-      2.72-1.71 2.94 0 3.48  
-      1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74  
-      0-2.01 1.36-2.01 2.75V20H8z"/></svg>
-    <div><strong>LinkedIn</strong><br>
-      <a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" style="color:var(--muted); text-decoration:underline;">
-        linkedin.com/in/vecihiasimkartoglu
-      </a>
-    </div>
-  </div>
+  <div class="info-item">
+    <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5  
+      2.5 0 11.001 5.001A2.5 2.5  
+      0 014.98 3.5zM4 8h2v12H4zM8  
+      8h2v1.71c.27-.5 1-1.71  
+      2.72-1.71 2.94 0 3.48  
+      1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74  
+      0-2.01 1.36-2.01 2.75V20H8z"/></svg>
+    <div><strong>LinkedIn</strong><br>
+      <a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" style="color:var(--muted); text-decoration:underline;">
+        linkedin.com/in/vecihiasimkartoglu
+      </a>
+    </div>
+  </div>
 
 </div>
-      </div>
-    </div>
-  </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="skills">
-  <h2 class="heading">SKILLS</h2>
-  <p class="intro">Here are some of my core skills and expertise areas.</p>
-  <div id="skills-grid">
-    <div class="skill-card">
-      <h4>GIS Analysis</h4>
-      <p>Spatial analysis, data modeling, map production</p>
-    </div>
-    <div class="skill-card">
-      <h4>Remote Sensing</h4>
-      <p>Satellite imagery processing, feature extraction</p>
-    </div>
-    <div class="skill-card">
-      <h4>Python Development</h4>
-      <p>Geoprocessing scripts, machine learning pipelines</p>
-    </div>
-    <div class="skill-card">
-      <p>Dashboards, maps, interactive reports</p>
-    </div>
-    <div class="skill-card">
-      <h4>AI & Computer Vision</h4>
-      <p>Object detection, image classification, automation</p>
-    </div>
-  </div>
+  <h2 class="heading">SKILLS</h2>
+  <p class="intro">Here are some of my core skills and expertise areas.</p>
+  <div id="skills-grid">
+    <div class="skill-card">
+      <h4>GIS Analysis</h4>
+      <p>Spatial analysis, data modeling, map production</p>
+    </div>
+    <div class="skill-card">
+      <h4>Remote Sensing</h4>
+      <p>Satellite imagery processing, feature extraction</p>
+      </div>
+    <div class="skill-card">
+      <h4>Python Development</h4>
+      <p>Geoprocessing scripts, machine learning pipelines</p>
+    </div>
+    <div class="skill-card">
+      <h4>Data Visualization</h4>       <p>Dashboards, maps, interactive reports</p>
+    </div>
+    <div class="skill-card">
+      <h4>AI & Computer Vision</h4>
+      <p>Object detection, image classification, automation</p>
+    </div>
+  </div>
 </section>
 
 <script>
-/* typing animation */
-const texts=["Geomatics Engineer","GIS Lead | Developer","Geospatial Data Scientist"];
-const dyn=document.getElementById("dynamic-part");
-let i=0, c=0;
-function type(){
-  let t=texts[i];
-  if(c<t.length){
-    dyn.textContent+=t[c++];
-    setTimeout(type,90);
-  }else setTimeout(erase,1500);
-}
-function erase(){
-  let t=texts[i];
-  if(c>0){
-    c--;
-    dyn.textContent=t.substring(0,c);
-    setTimeout(erase,45);
-  }else{
-    i=(i+1)%texts.length;
-    setTimeout(type,120);
-  }
-}
-type();
+  // İlk koddaki mantığa daha yakın, çalışan yazı animasyonu
+  const texts = [
+    "Geomatics Engineer",
+    "GIS Lead | Developer",
+    "Geospatial Data Scientist"
+  ];
 
-/* fade hero text */
-window.addEventListener("scroll",()=>{
-  const box=document.getElementById("text-container");
-  box.style.opacity = (window.scrollY > innerHeight*0.55) ? 0 : 1;
-});
+  const dynamicPart = document.getElementById('dynamic-part');
+  const textContainer = document.getElementById('text-container');
 
-/* nav */
-function scrollToTop(){ scrollTo({top:0,behavior:"smooth"}); }
-function scrollToAbout(){ scrollTo({top:innerHeight,behavior:"smooth"}); }
-function scrollToSkills(){ scrollTo({top:innerHeight*2,behavior:"smooth"}); }
+  let currentTextIndex = 0;
+  let charIndex = 0;
+
+  const typingSpeed = 100; // Yazma hızı
+  const pauseAfterTyping = 2000; // Yazdıktan sonra bekleme süresi
+  const deletingSpeed = 50; // Silme hızı
+
+  // Yeni fonksiyonlar (İlk kodda kullanılan isimlerle)
+  function typeText(text, callback) {
+    if (charIndex < text.length) {
+      dynamicPart.textContent += text.charAt(charIndex);
+      charIndex++;
+      setTimeout(() => typeText(text, callback), typingSpeed);
+    } else {
+      setTimeout(callback, pauseAfterTyping);
+    }
+  }
+
+  function deleteText(callback) {
+    if (charIndex > 0) {
+      dynamicPart.textContent = dynamicPart.textContent.slice(0, -1);
+      charIndex--;
+      setTimeout(() => deleteText(callback), deletingSpeed);
+    } else {
+      callback();
+    }
+  }
+
+  function loop() {
+    const currentText = texts[currentTextIndex];
+    typeText(currentText, () => {
+      deleteText(() => {
+        currentTextIndex = (currentTextIndex + 1) % texts.length;
+        loop(); // Döngüyü tekrar başlat
+      });
+    });
+  }
+
+  // Animasyonu başlat
+  loop();
+
+  // Scroll ile yazıyı gizle/göster (Opaklık ile yumuşak geçiş)
+  window.addEventListener("scroll", () => {
+    // textContainer'ın opaklığını scroll pozisyonuna göre ayarlar
+    const scrollRatio = window.scrollY / window.innerHeight;
+    // İlk bölümün %55'inden sonra opaklık 0'a iner
+    const opacity = 1 - Math.max(0, Math.min(1, (scrollRatio - 0.2) * 2));
+    textContainer.style.opacity = opacity;
+  });
+
+  // Navigasyon işlevi: Belirtilen ID'ye kaydırır
+  function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 </script>
 
 </body>
