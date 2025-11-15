@@ -6,12 +6,9 @@
 <title>Vecihi - Geomatics Engineer</title>
 
 <style>
-/* =================================== */
-/* GLOBAL */
-/* =================================== */
 :root{
   --accent:#6b00ff;
-  --muted:rgba(255,255,255,.80);
+  --muted:rgba(255,255,255,.82);
 }
 html,body{
   margin:0;
@@ -20,35 +17,32 @@ html,body{
   height:100%;
   background:#000;
   color:#fff;
-  font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+  font-family:"Segoe UI",sans-serif;
   scroll-behavior:smooth;
 }
 
-/* =================================== */
-/* BACKGROUND VIDEO */
-/* =================================== */
+/* ---------------------------------------- */
+/* BACKGROUND VIDEO  - always behind all    */
+/* ---------------------------------------- */
 #bg-video{
   position:fixed;
   inset:0;
-  width:100vw;
-  height:100vh;
+  width:100%;
+  height:100%;
   object-fit:cover;
-  z-index:-10;
+  z-index:-100; /* EN ARKA */
   pointer-events:none;
 }
-
-/* hafif karartma (okunabilirlik için) */
 #video-overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.25);
-  z-index:-5;
-  pointer-events:none;
+  background:rgba(0,0,0,.28);
+  z-index:-90;
 }
 
-/* =================================== */
-/* LEFT SIDEBAR */
-/* =================================== */
+/* ---------------------------------------- */
+/* LEFT MENU                                */
+/* ---------------------------------------- */
 #sidebar{
   position:fixed;
   left:22px;
@@ -57,100 +51,90 @@ html,body{
   display:flex;
   flex-direction:column;
   gap:18px;
-  z-index:50;
+  z-index:200;
 }
 .side-btn{
   width:52px;
   height:52px;
   border-radius:12px;
+  background:rgba(20,20,20,.55);
+  border:2px solid rgba(255,255,255,.08);
   display:flex;
   justify-content:center;
   align-items:center;
-  background:rgba(20,20,20,.55);
   cursor:pointer;
-  border:2px solid rgba(255,255,255,.08);
-  transition:.22s;
+  transition:.25s;
 }
-.side-btn:hover{
-  background:var(--accent);
-  transform:translateY(-3px);
-}
-.side-btn svg{
-  width:26px;
-  height:26px;
-  fill:#fff;
-}
+.side-btn:hover{ background:var(--accent); transform:translateY(-3px); }
+.side-btn svg{ width:26px; height:26px; fill:#fff; }
 
-/* =================================== */
-/* HERO SECTION */
-/* =================================== */
+/* ---------------------------------------- */
+/* HERO                                     */
+/* ---------------------------------------- */
 #hero{
   height:100vh;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
 }
 #text-container{
-  font-size:3.2rem;
-  font-weight:700;
-  pointer-events:none;
-  text-shadow:0 6px 24px rgba(0,0,0,.7);
+  font-size:3.3rem;
+  font-weight:800;
+  letter-spacing:1px;
+  text-shadow:0 6px 24px rgba(0,0,0,.65);
   font-family:monospace;
+  pointer-events:none;
 }
 
-/* =================================== */
-/* ABOUT SECTION */
-/* =================================== */
+/* ---------------------------------------- */
+/* ABOUT PAGE                               */
+/* ---------------------------------------- */
 #about{
   min-height:100vh;
-  padding:70px 9%;
-  box-sizing:border-box;
-  z-index:5;
+  padding:90px 9%;
   position:relative;
+  z-index:5;
 }
 
-/* heading */
 #about .heading{
-  font-size:2.3rem; /* daha büyük */
-  font-weight:800;
   text-align:center;
+  font-size:2.6rem;
+  font-weight:900;
 }
 
-/* intro text */
 #about .intro{
   margin:auto;
-  margin-top:10px;
-  max-width:1100px;
+  margin-top:12px;
+  max-width:1150px;
   text-align:center;
-  font-size:1.15rem; /* büyütüldü */
+  font-size:1.3rem;  /* büyütüldü */
   color:var(--muted);
-  line-height:1.65;
+  line-height:1.75;
 }
 
 .sep{
-  margin:20px auto;
-  width:90%;
-  max-width:1200px;
-  border-top:1px solid rgba(255,255,255,.10);
+  width:92%;
+  max-width:1300px;
+  margin:28px auto;
+  border-top:1px solid rgba(255,255,255,.12);
 }
 
-/* layout grid */
 .about-grid{
   width:100%;
-  max-width:1200px;
+  max-width:1250px;
   margin:auto;
   display:grid;
-  grid-template-columns:380px 1fr;
-  gap:40px;
+  grid-template-columns:400px 1fr;
   align-items:start;
+  gap:40px;
 }
 
-/* profile photo */
+/* PHOTO */
 .profile-photo{
-  border-radius:14px;
+  border-radius:10px;
   overflow:hidden;
-  border:2px solid rgba(255,255,255,.14);
-  box-shadow:0 14px 40px rgba(0,0,0,.6);
+  border:2px solid rgba(255,255,255,.12);
+  box-shadow:0 14px 38px rgba(0,0,0,.55);
 }
 .profile-photo img{
   width:100%;
@@ -159,37 +143,36 @@ html,body{
   aspect-ratio:3/4;
 }
 
-/* text content */
+/* TEXT */
 .content{
-  font-size:1.15rem; /* BÜYÜTÜLDÜ */
-  line-height:1.7;
+  font-size:1.22rem; /* %20 BÜYÜTÜLDÜ */
+  line-height:1.75;
   color:#fff;
 }
 .content h3{
-  margin:0 0 10px 0;
-  font-size:1.45rem;
+  margin:0 0 12px 0;
+  font-size:1.55rem;
+  font-weight:800;
 }
 
-/* strong divider */
 .hr-strong{
   height:3px;
-  border-radius:3px;
-  background:linear-gradient(90deg,var(--accent),rgba(107,0,255,0.25));
-  margin:22px 0;
+  margin:24px 0;
+  background:linear-gradient(90deg,var(--accent),rgba(107,0,255,.2));
+  border-radius:4px;
 }
 
-/* info list */
 .info-list{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:16px 26px;
-  margin-top:10px;
+  gap:18px 26px;
+  margin-top:12px;
 }
 .info-item{
   display:flex;
   gap:12px;
+  font-size:1.1rem;
   color:var(--muted);
-  font-size:1rem;
 }
 .info-item svg{
   width:22px;
@@ -197,22 +180,18 @@ html,body{
   fill:var(--accent);
 }
 
-/* responsive */
 @media(max-width:900px){
-  .about-grid{
-    grid-template-columns:1fr;
-  }
-  #text-container{ font-size:2rem; }
+  .about-grid{ grid-template-columns:1fr; }
+  #text-container{ font-size:2.2rem; }
   .info-list{ grid-template-columns:1fr; }
 }
 </style>
 </head>
-
 <body>
 
-<!-- video -->
+<!-- video background -->
 <video id="bg-video" autoplay muted loop playsinline>
-  <source src="spining_globe.mp4" type="video/mp4"/>
+  <source src="spining_globe.mp4" type="video/mp4">
 </video>
 <div id="video-overlay"></div>
 
@@ -228,21 +207,22 @@ html,body{
   </div>
 </div>
 
-<!-- HERO -->
+<!-- hero -->
 <section id="hero">
   <div id="text-container">
     <span id="static-part">I am a </span><span id="dynamic-part"></span>
   </div>
 </section>
 
-<!-- ABOUT -->
+<!-- about -->
 <section id="about">
-
   <h2 class="heading">ABOUT</h2>
 
   <p class="intro">
-    I am a Geomatics Engineer. I am interested in GIS, Data Management, Computer Vision and Artificial Intelligence.
-    I work as a GIS Lead | Developer.
+    I am a Geomatics Engineer with a strong passion for GIS, Spatial Data Management, Remote Sensing,
+    Computer Vision and Artificial Intelligence.  
+    I currently work as a <strong>GIS Lead | Developer</strong> focusing on spatial analysis,
+    automation, digital mapping and geodata pipelines.
   </p>
 
   <div class="sep"></div>
@@ -254,9 +234,17 @@ html,body{
     </div>
 
     <div class="content">
-      <h3>GIS & Remote Sensing | Spatial Data Science</h3>
-      <p class="lead">
-        By combining GIS and programming, I develop tools for spatial analysis, data management, visualization and machine learning workflows.
+      <h3>GIS • Remote Sensing • Spatial Data Science</h3>
+
+      <p>
+        I develop geospatial solutions by combining engineering, data science and software development.
+        My work includes spatial data modeling, attribute/geometry editing systems, enterprise GIS setups,
+        automated workflows, quality control tools and advanced visualization dashboards.
+      </p>
+
+      <p>
+        I also build Python-based geoprocessing tools, machine learning pipelines, imagery analysis,
+        feature extraction systems and location-intelligence applications.
       </p>
 
       <div class="hr-strong"></div>
@@ -266,28 +254,35 @@ html,body{
         <div class="info-item">
           <svg viewBox="0 0 24 24"><path d="M12 2l9 4-9 4-9-4z"/></svg>
           <div><strong>Website</strong><br>
-            <a href="https://vecihiasim.github.io/" target="_blank" style="color:var(--muted); text-decoration:underline;">vecihiasim.github.io</a>
+            <a href="https://vecihiasim.github.io/" target="_blank" style="color:var(--muted); text-decoration:underline;">
+              vecihiasim.github.io
+            </a>
           </div>
         </div>
 
         <div class="info-item">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 
-            2 0 00-2-2zm0 2l-8 5-8-5h16z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 
+      0 002-2V6a2 2 0 00-2-2zm0 2l-8 
+      5-8-5h16z"/></svg>
           <div><strong>Email</strong><br>
-            <a href="mailto:vecihikrtgl@gmail.com" style="color:var(--muted); text-decoration:underline;">vecihikrtgl@gmail.com</a>
+            <a href="mailto:vecihikrtgl@gmail.com" style="color:var(--muted); text-decoration:underline;">
+              vecihikrtgl@gmail.com
+            </a>
           </div>
         </div>
 
         <div class="info-item">
-          <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 
-            0 006.59 6.59l2.2-2.2a1 1 
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 
+            15.05 0 006.59 6.59l2.2-2.2a1 1 
             0 011.11-.21 11.36 11.36 
             0 003.55.57 1 1 0 011 1v3.4a1 
             1 0 01-1 1A18 18 0 013 6a1 
             1 0 011-1h3.4a1 1 0 011 
             1 11.36 11.36 0 00.57 3.55 
             1 1 0 01-.21 1.11z"/></svg>
-          <div><strong>Phone</strong><br>+90 505 706 65 89</div>
+          <div><strong>Phone</strong><br>
+            +90 505 706 65 89
+          </div>
         </div>
 
         <div class="info-item">
@@ -306,19 +301,20 @@ html,body{
             1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 
             0-2.01 1.36-2.01 2.75V20H8z"/></svg>
           <div><strong>LinkedIn</strong><br>
-            <a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" style="color:var(--muted); text-decoration:underline;">linkedin.com/in/vecihiasimkartoglu</a>
+            <a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" style="color:var(--muted); text-decoration:underline;">
+              linkedin.com/in/vecihiasimkartoglu
+            </a>
           </div>
         </div>
 
       </div>
     </div>
-
   </div>
 </section>
 
 <script>
 /* typing animation */
-const texts=["Geomatics Engineer","GIS Lead | Developer","GeoSpatial Data Scientist"];
+const texts=["Geomatics Engineer","GIS Lead | Developer","Geospatial Data Scientist"];
 const dyn=document.getElementById("dynamic-part");
 let i=0, c=0;
 function type(){
@@ -341,13 +337,13 @@ function erase(){
 }
 type();
 
-/* fade hero text on scroll */
+/* fade hero text */
 window.addEventListener("scroll",()=>{
   const box=document.getElementById("text-container");
   box.style.opacity = (window.scrollY > innerHeight*0.55) ? 0 : 1;
 });
 
-/* navigation */
+/* nav */
 function scrollToTop(){ scrollTo({top:0,behavior:"smooth"}); }
 function scrollToAbout(){ scrollTo({top:innerHeight,behavior:"smooth"}); }
 </script>
