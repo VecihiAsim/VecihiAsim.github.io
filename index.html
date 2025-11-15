@@ -30,7 +30,7 @@ html,body{
   width:100%;
   height:100%;
   object-fit:cover;
-  z-index:-100; /* EN ARKA */
+  z-index:-100;
   pointer-events:none;
 }
 #video-overlay{
@@ -39,6 +39,7 @@ html,body{
   background:rgba(0,0,0,.28);
   z-index:-90;
 }  
+
 /* ---------------------------------------- */
 /* LEFT MENU                                */
 /* ---------------------------------------- */
@@ -88,25 +89,25 @@ html,body{
 /* ---------------------------------------- */
 /* ABOUT PAGE                               */
 /* ---------------------------------------- */
-#about{
+section{
   min-height:100vh;
   padding:90px 9%;
   position:relative;
   z-index:5;
 }
 
-#about .heading{
+.heading{
   text-align:center;
   font-size:2.6rem;
   font-weight:900;
 }
 
-#about .intro{
+.intro{
   margin:auto;
   margin-top:12px;
   max-width:1150px;
   text-align:center;
-  font-size:1.3rem;  /* büyütüldü */
+  font-size:1.3rem;
   color:var(--muted);
   line-height:1.75;
 }
@@ -144,7 +145,7 @@ html,body{
 
 /* TEXT */
 .content{
-  font-size:1.22rem; /* %20 BÜYÜTÜLDÜ */
+  font-size:1.22rem;
   line-height:1.75;
   color:#fff;
 }
@@ -179,10 +180,46 @@ html,body{
   fill:var(--accent);
 }
 
+/* ---------------------------------------- */
+/* SKILLS PAGE                              */
+/* ---------------------------------------- */
+#skills-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:28px;
+  max-width:1200px;
+  margin:40px auto 0 auto;
+}
+.skill-card{
+  background:rgba(20,20,20,.45);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;
+  padding:28px 22px;
+  text-align:center;
+  transition:.3s;
+}
+.skill-card:hover{
+  background:var(--accent);
+  color:#fff;
+  transform:translateY(-6px);
+}
+.skill-card h4{
+  margin:0 0 12px 0;
+  font-size:1.4rem;
+}
+.skill-card p{
+  margin:0;
+  font-size:1rem;
+  color:var(--muted);
+}
+
+/* ---------------------------------------- */
+/* MEDIA QUERIES                            */
 @media(max-width:900px){
   .about-grid{ grid-template-columns:1fr; }
   #text-container{ font-size:2.2rem; }
   .info-list{ grid-template-columns:1fr; }
+  #skills-grid{ grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -204,6 +241,9 @@ html,body{
       2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 
       1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
   </div>
+  <div class="side-btn" onclick="scrollToSkills()">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-8-4 8-4 8 4-8 4z"/></svg>
+  </div>
 </div>
 
 <!-- hero -->
@@ -216,7 +256,6 @@ html,body{
 <!-- about -->
 <section id="about">
   <h2 class="heading">ABOUT</h2>
-
   <p class="intro">
     I am a Geomatics Engineer with a strong passion for GIS, Spatial Data Management, Remote Sensing,
     Computer Vision and Artificial Intelligence.  
@@ -227,11 +266,9 @@ html,body{
   <div class="sep"></div>
 
   <div class="about-grid">
-
     <div class="profile-photo">
       <img src="resume.png" alt="">
     </div>
-
     <div class="content">
       <h3>GIS • Remote Sensing • Spatial Data Science</h3>
 
@@ -249,64 +286,36 @@ html,body{
       <div class="hr-strong"></div>
 
       <div class="info-list">
-
-        <div class="info-item">
-          <svg viewBox="0 0 24 24"><path d="M12 2l9 4-9 4-9-4z"/></svg>
-          <div><strong>Website</strong><br>
-            <a href="https://vecihiasim.github.io/" target="_blank" style="color:var(--muted); text-decoration:underline;">
-              vecihiasim.github.io
-            </a>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 
-      0 002-2V6a2 2 0 00-2-2zm0 2l-8 
-      5-8-5h16z"/></svg>
-          <div><strong>Email</strong><br>
-            <a href="mailto:vecihikrtgl@gmail.com" style="color:var(--muted); text-decoration:underline;">
-              vecihikrtgl@gmail.com
-            </a>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 
-            15.05 0 006.59 6.59l2.2-2.2a1 1 
-            0 011.11-.21 11.36 11.36 
-            0 003.55.57 1 1 0 011 1v3.4a1 
-            1 0 01-1 1A18 18 0 013 6a1 
-            1 0 011-1h3.4a1 1 0 011 
-            1 11.36 11.36 0 00.57 3.55 
-            1 1 0 01-.21 1.11z"/></svg>
-          <div><strong>Phone</strong><br>
-            +90 505 706 65 89
-          </div>
-        </div>
-
-        <div class="info-item">
-          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 
-            7c0 5.25 7 13 7 13s7-7.75 
-            7-13a7 7 0 00-7-7z"/></svg>
-          <div><strong>Location</strong><br>Turkey</div>
-        </div>
-
-        <div class="info-item">
-          <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 
-            2.5 0 11.001 5.001A2.5 2.5 
-            0 014.98 3.5zM4 8h2v12H4zM8 
-            8h2v1.71c.27-.5 1-1.71 
-            2.72-1.71 2.94 0 3.48 
-            1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 
-            0-2.01 1.36-2.01 2.75V20H8z"/></svg>
-          <div><strong>LinkedIn</strong><br>
-            <a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" style="color:var(--muted); text-decoration:underline;">
-              linkedin.com/in/vecihiasimkartoglu
-            </a>
-          </div>
-        </div>
-
+        <!-- info items burada kalacak -->
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- skills -->
+<section id="skills">
+  <h2 class="heading">SKILLS</h2>
+  <p class="intro">Here are some of my core skills and expertise areas.</p>
+  <div id="skills-grid">
+    <div class="skill-card">
+      <h4>GIS Analysis</h4>
+      <p>Spatial analysis, data modeling, map production</p>
+    </div>
+    <div class="skill-card">
+      <h4>Remote Sensing</h4>
+      <p>Satellite imagery processing, feature extraction</p>
+    </div>
+    <div class="skill-card">
+      <h4>Python Development</h4>
+      <p>Geoprocessing scripts, machine learning pipelines</p>
+    </div>
+    <div class="skill-card">
+      <h4>Data Visualization</h4>
+      <p>Dashboards, maps, interactive reports</p>
+    </div>
+    <div class="skill-card">
+      <h4>AI & Computer Vision</h4>
+      <p>Object detection, image classification, automation</p>
     </div>
   </div>
 </section>
@@ -345,6 +354,7 @@ window.addEventListener("scroll",()=>{
 /* nav */
 function scrollToTop(){ scrollTo({top:0,behavior:"smooth"}); }
 function scrollToAbout(){ scrollTo({top:innerHeight,behavior:"smooth"}); }
+function scrollToSkills(){ scrollTo({top:innerHeight*2,behavior:"smooth"}); }
 </script>
 
 </body>
