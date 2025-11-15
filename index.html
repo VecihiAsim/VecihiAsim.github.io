@@ -22,21 +22,21 @@ html,body{
 }
 
 /* ---------------------------------------- */
-/* BACKGROUND VIDEO  - DÜZELTİLDİ           */
+/* BACKGROUND VIDEO                          */
 /* ---------------------------------------- */
-#bg-video{
-  position:fixed;
+#bg-video {
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* Yeni: Tam ekran genişliği */
-  height: 100vh; /* Yeni: Tam ekran yüksekliği */
-  object-fit:cover;
-  z-index:-100;
-  pointer-events:none;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -2;  /* Arkada kalır */
+  pointer-events: none;
+  opacity: 0.95; /* Hafif transparan efekti isteğe bağlı */
+  transition: opacity 0.5s ease;
 }
-#video-overlay{
-  display:none;
-}
+
 /* ---------------------------------------- */
 /* LEFT MENU                                */
 /* ---------------------------------------- */
@@ -68,11 +68,13 @@ html,body{
 /* ---------------------------------------- */
 /* HERO                                     */
 /* ---------------------------------------- */
-#hero{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+#hero {
+  position: relative;
+  z-index: 5;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #text-container{
   font-size:3.3rem;
@@ -81,16 +83,17 @@ html,body{
   text-shadow:0 6px 24px rgba(0,0,0,.65);
   font-family:monospace;
   pointer-events:none;
+  transition: opacity 0.5s ease; /* Fade animasyonu */
 }
 
 /* ---------------------------------------- */
 /* ABOUT PAGE                               */
 /* ---------------------------------------- */
-#about{
-  min-height:100vh;
-  padding:90px 9%;
-  position:relative;
-  z-index:5;
+#about {
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+  padding: 90px 9%;
 }
 
 #about .heading{
@@ -186,10 +189,10 @@ html,body{
 </head>
 <body>
 
+<!-- BACKGROUND VIDEO -->
 <video id="bg-video" autoplay muted loop playsinline>
   <source src="spining_globe.mp4" type="video/mp4">
 </video>
-<div id="video-overlay"></div>
 
 <div id="sidebar">
   <div class="side-btn" onclick="scrollToTop()">
@@ -243,7 +246,6 @@ html,body{
       <div class="hr-strong"></div>
 
       <div class="info-list">
-
         <div class="info-item">
           <svg viewBox="0 0 24 24"><path d="M12 2l9 4-9 4-9-4z"/></svg>
           <div><strong>Website</strong><br>
@@ -252,7 +254,6 @@ html,body{
             </a>
           </div>
         </div>
-
         <div class="info-item">
           <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 
       0 002-2V6a2 2 0 00-2-2zm0 2l-8 
@@ -263,50 +264,13 @@ html,body{
             </a>
           </div>
         </div>
-
-        <div class="info-item">
-          <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 
-            15.05 0 006.59 6.59l2.2-2.2a1 1 
-            0 011.11-.21 11.36 11.36 
-            0 003.55.57 1 1 0 011 1v3.4a1 
-            1 0 01-1 1A18 18 0 013 6a1 
-            1 0 011-1h3.4a1 1 0 011 
-            1 11.36 11.36 0 00.57 3.55 
-            1 1 0 01-.21 1.11z"/></svg>
-          <div><strong>Phone</strong><br>
-            +90 505 706 65 89
-          </div>
-        </div>
-
-        <div class="info-item">
-          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 
-            7c0 5.25 7 13 7 13s7-7.75 
-            7-13a7 7 0 00-7-7z"/></svg>
-          <div><strong>Location</strong><br>Turkey</div>
-        </div>
-
-        <div class="info-item">
-          <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 
-            2.5 0 11.001 5.001A2.5 2.5 
-            0 014.98 3.5zM4 8h2v12H4zM8 
-            8h2v1.71c.27-.5 1-1.71 
-            2.72-1.71 2.94 0 3.48 
-            1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 
-            0-2.01 1.36-2.01 2.75V20H8z"/></svg>
-          <div><strong>LinkedIn</strong><br>
-            <a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" style="color:var(--muted); text-decoration:underline;">
-              linkedin.com/in/vecihiasimkartoglu
-            </a>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 </section>
 
 <script>
-/* typing animation */
+/* Typing animation */
 const texts=["Geomatics Engineer","GIS Lead | Developer","Geospatial Data Scientist"];
 const dyn=document.getElementById("dynamic-part");
 let i=0, c=0;
@@ -330,13 +294,14 @@ function erase(){
 }
 type();
 
-/* fade hero text */
+/* Fade hero text on scroll */
 window.addEventListener("scroll",()=>{
   const box=document.getElementById("text-container");
-  box.style.opacity = (window.scrollY > innerHeight*0.55) ? 0 : 1;
+  let fadePoint = window.innerHeight * 0.55;
+  box.style.opacity = (window.scrollY > fadePoint) ? 0 : 1;
 });
 
-/* nav */
+/* Navigation */
 function scrollToTop(){ scrollTo({top:0,behavior:"smooth"}); }
 function scrollToAbout(){ scrollTo({top:innerHeight,behavior:"smooth"}); }
 </script>
