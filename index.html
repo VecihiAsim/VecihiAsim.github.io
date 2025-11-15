@@ -31,10 +31,8 @@ html,body{
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  z-index: -2;  /* Arkada kalır */
+  z-index: -2; /* Arkada kalacak şekilde düzeltildi */
   pointer-events: none;
-  opacity: 0.95; /* Hafif transparan efekti isteğe bağlı */
-  transition: opacity 0.5s ease;
 }
 
 /* ---------------------------------------- */
@@ -69,12 +67,12 @@ html,body{
 /* HERO                                     */
 /* ---------------------------------------- */
 #hero {
-  position: relative;
+  position: relative; /* video üstünde içerik */
   z-index: 5;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 #text-container{
   font-size:3.3rem;
@@ -83,7 +81,8 @@ html,body{
   text-shadow:0 6px 24px rgba(0,0,0,.65);
   font-family:monospace;
   pointer-events:none;
-  transition: opacity 0.5s ease; /* Fade animasyonu */
+  z-index:6; /* video üstünde yazı */
+  transition: opacity 0.5s ease; /* fade efekti */
 }
 
 /* ---------------------------------------- */
@@ -91,7 +90,7 @@ html,body{
 /* ---------------------------------------- */
 #about {
   position: relative;
-  z-index: 5;
+  z-index:5;
   min-height: 100vh;
   padding: 90px 9%;
 }
