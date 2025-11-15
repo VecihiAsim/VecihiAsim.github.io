@@ -359,30 +359,97 @@ section{
 <!-- skills -->
 <section id="skills">
   <h2 class="heading">SKILLS</h2>
-  <p class="intro">Here are some of my core skills and expertise areas.</p>
+  <p class="intro">
+    Throughout my career, I have gained valuable experiences and education in various domains.
+    Here are some of the key skills I have developed and mastered over time.
+  </p>
   <div id="skills-grid">
     <div class="skill-card">
-      <h4>GIS Analysis</h4>
-      <p>Spatial analysis, data modeling, map production</p>
+      <div class="skill-card-inner">
+        <img src="python-logo.png" alt="Python Logo" class="skill-logo">
+        <div>
+          <h4>Python</h4>
+          <p>Image Processing, Computer Vision, AI</p>
+        </div>
+      </div>
     </div>
     <div class="skill-card">
-      <h4>Remote Sensing</h4>
-      <p>Satellite imagery processing, feature extraction</p>
+      <div class="skill-card-inner">
+        <img src="gis-logo.png" alt="GIS Logo" class="skill-logo">
+        <div>
+          <h4>GIS & Remote Sensing</h4>
+          <p>QGIS, ArcGIS, PostGIS</p>
+        </div>
+      </div>
     </div>
     <div class="skill-card">
-      <h4>Python Development</h4>
-      <p>Geoprocessing scripts, machine learning pipelines</p>
+      <div class="skill-card-inner">
+        <img src="cad-logo.png" alt="CAD Logo" class="skill-logo">
+        <div>
+          <h4>CAD</h4>
+          <p>AutoCAD, NetCAD</p>
+        </div>
+      </div>
     </div>
     <div class="skill-card">
-      <h4>Data Visualization</h4>
-      <p>Dashboards, maps, interactive reports</p>
-    </div>
-    <div class="skill-card">
-      <h4>AI & Computer Vision</h4>
-      <p>Object detection, image classification, automation</p>
+      <div class="skill-card-inner">
+        <img src="jira-logo.png" alt="JIRA Logo" class="skill-logo">
+        <div>
+          <h4>JIRA</h4>
+          <p>Project & Task Management</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+/* skills grid update */
+#skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  max-width: 1200px;
+  margin: 40px auto 0 auto;
+}
+
+.skill-card {
+  background: rgba(20, 20, 20, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 22px 18px;
+  transition: 0.3s;
+}
+
+.skill-card:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-6px);
+}
+
+.skill-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.skill-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.skill-card h4 {
+  margin: 0 0 6px 0;
+  font-size: 1.3rem;
+}
+
+.skill-card p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--muted);
+}
+</style>
 
 <script>
 /* typing animation */
