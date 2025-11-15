@@ -4,352 +4,352 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Vecihi - Geomatics Engineer</title>
+
 <style>
-  /* ====== GLOBAL ====== */
-  :root{
-    --accent: #6b00ff;
-    --muted: rgba(255,255,255,0.75);
-    --bg-overlay: rgba(0,0,0,0.25);
-  }
-  html,body{
-    height:100%;
-    margin:0;
-    padding:0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: #000;
-    color:#fff;
-    scroll-behavior: smooth;
-  }
+/* =================================== */
+/* GLOBAL */
+/* =================================== */
+:root{
+  --accent:#6b00ff;
+  --muted:rgba(255,255,255,.80);
+}
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#fff;
+  font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+  scroll-behavior:smooth;
+}
 
-  /* ====== BACKGROUND VIDEO (persistent) ====== */
-  #bg-video{
-    position:fixed;
-    inset:0;
-    width:100vw;
-    height:100vh;
-    object-fit:cover;
-    z-index:-3;
-    pointer-events:none;
-  }
-  /* optional subtle overlay so white text reads better */
-  #bg-overlay {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35));
-    z-index: -2;
-    pointer-events: none;
-  }
+/* =================================== */
+/* BACKGROUND VIDEO */
+/* =================================== */
+#bg-video{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  object-fit:cover;
+  z-index:-10;
+  pointer-events:none;
+}
 
-  /* ====== LEFT SIDEBAR ====== */
-  #sidebar{
-    position: fixed;
-    left: 22px;
-    top: 50%;
-    transform: translateY(-50%);
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-    z-index: 30;
-  }
-  .side-btn{
-    width:52px;
-    height:52px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background: rgba(10,10,10,0.55);
-    border: 2px solid rgba(255,255,255,0.06);
-    cursor:pointer;
-    transition: all .22s ease;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-  }
-  .side-btn:hover{
-    transform: translateY(-3px) scale(1.02);
-    background: var(--accent);
-  }
-  .side-btn svg{ width:26px; height:26px; fill:#fff; }
+/* hafif karartma (okunabilirlik için) */
+#video-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.25);
+  z-index:-5;
+  pointer-events:none;
+}
 
-  /* ====== FIRST (HERO) SECTION ====== */
-  #hero {
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    z-index:10;
-  }
-  #text-container{
-    text-align:center;
-    pointer-events:none;
-    font-family: monospace;
-    font-weight:700;
-    font-size:3.2rem;
-    text-shadow: 0 6px 24px rgba(0,0,0,0.7);
-    letter-spacing: .6px;
-    color: #fff;
-  }
-  #static-part{ opacity:0.95; }
-  #dynamic-part{ color: #ffd; }
+/* =================================== */
+/* LEFT SIDEBAR */
+/* =================================== */
+#sidebar{
+  position:fixed;
+  left:22px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  z-index:50;
+}
+.side-btn{
+  width:52px;
+  height:52px;
+  border-radius:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:rgba(20,20,20,.55);
+  cursor:pointer;
+  border:2px solid rgba(255,255,255,.08);
+  transition:.22s;
+}
+.side-btn:hover{
+  background:var(--accent);
+  transform:translateY(-3px);
+}
+.side-btn svg{
+  width:26px;
+  height:26px;
+  fill:#fff;
+}
 
-  /* hide typing on small screens slightly */
-  @media(max-width:420px){
-    #text-container{ font-size:1.6rem; padding: 0 10px;}
-  }
+/* =================================== */
+/* HERO SECTION */
+/* =================================== */
+#hero{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#text-container{
+  font-size:3.2rem;
+  font-weight:700;
+  pointer-events:none;
+  text-shadow:0 6px 24px rgba(0,0,0,.7);
+  font-family:monospace;
+}
 
-  /* ====== ABOUT SECTION (second page) ====== */
-  #about {
-    min-height:100vh;
-    padding:56px 8%;
-    box-sizing:border-box;
-    display:flex;
-    flex-direction:column;
-    gap:28px;
-    align-items:center;
-    z-index:5;
-    position:relative;
-  }
+/* =================================== */
+/* ABOUT SECTION */
+/* =================================== */
+#about{
+  min-height:100vh;
+  padding:70px 9%;
+  box-sizing:border-box;
+  z-index:5;
+  position:relative;
+}
 
-  /* heading + intro */
-  #about .heading{
-    font-size:2rem;
-    letter-spacing:1px;
-    font-weight:800;
-    color:#fff;
-    margin:0;
-    text-align:center;
-  }
+/* heading */
+#about .heading{
+  font-size:2.3rem; /* daha büyük */
+  font-weight:800;
+  text-align:center;
+}
 
-  #about .intro {
-    max-width:1100px;
-    text-align:center;
-    color:var(--muted);
-    font-size:0.99rem;
-    line-height:1.6;
-    margin-top:8px;
-  }
+/* intro text */
+#about .intro{
+  margin:auto;
+  margin-top:10px;
+  max-width:1100px;
+  text-align:center;
+  font-size:1.15rem; /* büyütüldü */
+  color:var(--muted);
+  line-height:1.65;
+}
 
-  .sep {
-    width:90%;
-    max-width:1200px;
-    margin:18px auto;
-    border-top:1px solid rgba(255,255,255,0.08);
-  }
+.sep{
+  margin:20px auto;
+  width:90%;
+  max-width:1200px;
+  border-top:1px solid rgba(255,255,255,.10);
+}
 
-  /* main two-column area */
+/* layout grid */
+.about-grid{
+  width:100%;
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:380px 1fr;
+  gap:40px;
+  align-items:start;
+}
+
+/* profile photo */
+.profile-photo{
+  border-radius:14px;
+  overflow:hidden;
+  border:2px solid rgba(255,255,255,.14);
+  box-shadow:0 14px 40px rgba(0,0,0,.6);
+}
+.profile-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  aspect-ratio:3/4;
+}
+
+/* text content */
+.content{
+  font-size:1.15rem; /* BÜYÜTÜLDÜ */
+  line-height:1.7;
+  color:#fff;
+}
+.content h3{
+  margin:0 0 10px 0;
+  font-size:1.45rem;
+}
+
+/* strong divider */
+.hr-strong{
+  height:3px;
+  border-radius:3px;
+  background:linear-gradient(90deg,var(--accent),rgba(107,0,255,0.25));
+  margin:22px 0;
+}
+
+/* info list */
+.info-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px 26px;
+  margin-top:10px;
+}
+.info-item{
+  display:flex;
+  gap:12px;
+  color:var(--muted);
+  font-size:1rem;
+}
+.info-item svg{
+  width:22px;
+  height:22px;
+  fill:var(--accent);
+}
+
+/* responsive */
+@media(max-width:900px){
   .about-grid{
-    width:100%;
-    max-width:1200px;
-    display:grid;
-    grid-template-columns: 380px 1fr;
-    gap:40px;
-    align-items:start;
+    grid-template-columns:1fr;
   }
-
-  /* left: large rectangular photo */
-  .profile-photo{
-    width:100%;
-    height: auto;
-    border-radius:14px;
-    overflow:hidden;
-    border:2px solid rgba(255,255,255,0.06);
-    box-shadow: 0 14px 40px rgba(0,0,0,0.65);
-  }
-  .profile-photo img{
-    display:block;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    aspect-ratio: 3/4;
-  }
-
-  /* right: content */
-  .content {
-    color: #fff;
-    font-size:1rem;
-    line-height:1.6;
-  }
-  .content h3{
-    margin:0 0 8px 0;
-    font-size:1.3rem;
-    color:#fff;
-  }
-  .content p.lead{
-    color:var(--muted);
-    margin:0 0 16px 0;
-  }
-
-  .hr-strong{
-    height:3px;
-    background: linear-gradient(90deg,var(--accent), rgba(107,0,255,0.35));
-    width:100%;
-    margin:18px 0;
-    border-radius:3px;
-  }
-
-  /* icon list */
-  .info-list{
-    display:grid;
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    gap:12px 22px;
-    margin-top:6px;
-  }
-  .info-item{
-    display:flex;
-    gap:12px;
-    align-items:flex-start;
-    color:var(--muted);
-    font-size:0.98rem;
-  }
-  .info-item svg{ width:20px; height:20px; flex-shrink:0; fill:var(--accent); margin-top:3px; }
-
-  .contact-note{
-    margin-top:18px;
-    color:var(--muted);
-    font-size:0.95rem;
-  }
-
-  /* bottom separator and footer note */
-  .bottom-sep{ margin-top:26px; width:100%; border-top:1px solid rgba(255,255,255,0.06); padding-top:18px; text-align:center; color:var(--muted); }
-
-  /* responsive */
-  @media(max-width:1000px){
-    .about-grid{ grid-template-columns: 1fr; }
-    .profile-photo img{ aspect-ratio: 16/9; }
-    .info-list{ grid-template-columns: 1fr; }
-    #sidebar{ left:12px; }
-  }
+  #text-container{ font-size:2rem; }
+  .info-list{ grid-template-columns:1fr; }
+}
 </style>
 </head>
+
 <body>
 
-  <!-- BACKGROUND VIDEO (persistent across scroll) -->
-  <video id="bg-video" autoplay muted loop playsinline>
-    <source src="spining_globe.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  <div id="bg-overlay" aria-hidden="true"></div>
+<!-- video -->
+<video id="bg-video" autoplay muted loop playsinline>
+  <source src="spining_globe.mp4" type="video/mp4"/>
+</video>
+<div id="video-overlay"></div>
 
-  <!-- LEFT SIDEBAR -->
-  <div id="sidebar" role="navigation" aria-label="Main navigation">
-    <div class="side-btn" title="Home" onclick="scrollToTop()">
-      <!-- home icon -->
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 8h-3v7h-12v-7h-3z"/></svg>
-    </div>
-    <div class="side-btn" title="About" onclick="scrollToAbout()">
-      <!-- person icon -->
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-    </div>
+<!-- sidebar -->
+<div id="sidebar">
+  <div class="side-btn" onclick="scrollToTop()">
+    <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v7h-12v-7h-3z"/></svg>
   </div>
+  <div class="side-btn" onclick="scrollToAbout()">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 
+      2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 
+      1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+  </div>
+</div>
 
-  <!-- HERO / FIRST SCREEN -->
-  <section id="hero" aria-label="Hero">
-    <div id="text-container" role="heading" aria-level="1">
-      <span id="static-part">I am a&nbsp;</span><span id="dynamic-part"></span>
+<!-- HERO -->
+<section id="hero">
+  <div id="text-container">
+    <span id="static-part">I am a </span><span id="dynamic-part"></span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+
+  <h2 class="heading">ABOUT</h2>
+
+  <p class="intro">
+    I am a Geomatics Engineer. I am interested in GIS, Data Management, Computer Vision and Artificial Intelligence.
+    I work as a GIS Lead | Developer.
+  </p>
+
+  <div class="sep"></div>
+
+  <div class="about-grid">
+
+    <div class="profile-photo">
+      <img src="resume.png" alt="">
     </div>
-  </section>
 
-  <!-- ABOUT / SECOND SCREEN -->
-  <section id="about" aria-labelledby="about-title">
-    <h2 id="about-title" class="heading">ABOUT</h2>
+    <div class="content">
+      <h3>GIS & Remote Sensing | Spatial Data Science</h3>
+      <p class="lead">
+        By combining GIS and programming, I develop tools for spatial analysis, data management, visualization and machine learning workflows.
+      </p>
 
-    <p class="intro">
-      I am a Geomatics Engineer. I am interested in GIS, Data Management, Computer Vision and Artificial Intelligence. I work as a GIS Lead | Developer and graduated from Yıldız Technical University, Geomatics Engineering.
-    </p>
+      <div class="hr-strong"></div>
 
-    <div class="sep" aria-hidden="true"></div>
+      <div class="info-list">
 
-    <div class="about-grid" role="region" aria-label="About content">
-      <!-- LEFT PHOTO -->
-      <div class="profile-photo" aria-hidden="true">
-        <!-- keep filename as resume.png (replace with your own) -->
-        <img src="resume.png" alt="Vecihi - profile photo">
-      </div>
-
-      <!-- RIGHT CONTENT -->
-      <div class="content">
-        <h3>GIS & Remote Sensing | Spatial Data Science</h3>
-        <p class="lead">
-          I work in GIS and Remote Sensing. By combining GIS and programming I build tools and workflows for spatial analysis, data management, visualization and machine learning pipelines applied to geospatial problems.
-        </p>
-
-        <div class="hr-strong" aria-hidden="true"></div>
-
-        <div class="info-list">
-          <div class="info-item">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l9 4-9 4-9-4z"/></svg>
-            <div><strong>Website</strong><br><a href="https://vecihiasim.github.io/" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline;">vecihiasim.github.io</a></div>
-          </div>
-
-          <div class="info-item">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2l-8 5-8-5h16z"/></svg>
-            <div><strong>Email</strong><br><a href="mailto:vecihikrtgl@gmail.com" style="color:var(--muted); text-decoration:underline;">vecihikrtgl@gmail.com</a></div>
-          </div>
-
-          <div class="info-item">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.55.57 1 1 0 011 1v3.4a1 1 0 01-1 1A18 18 0 013 6a1 1 0 011-1h3.4a1 1 0 011 1 11.36 11.36 0 00.57 3.55 1 1 0 01-.21 1.11z"/></svg>
-            <div><strong>Phone</strong><br>+90 505 706 65 89</div>
-          </div>
-
-          <div class="info-item">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7z"/></svg>
-            <div><strong>Location</strong><br>Turkey</div>
-          </div>
-
-          <div class="info-item">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11.001 5.001A2.5 2.5 0 014.98 3.5zM4 8h2v12H4zM8 8h2v1.71c.27-.5 1-1.71 2.72-1.71 2.94 0 3.48 1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2.01 1.36-2.01 2.75V20H8z"/></svg>
-            <div><strong>LinkedIn</strong><br><a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" rel="noopener" style="color:var(--muted); text-decoration:underline;">linkedin.com/in/vecihiasimkartoglu</a></div>
+        <div class="info-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2l9 4-9 4-9-4z"/></svg>
+          <div><strong>Website</strong><br>
+            <a href="https://vecihiasim.github.io/" target="_blank" style="color:var(--muted); text-decoration:underline;">vecihiasim.github.io</a>
           </div>
         </div>
 
-        <p class="contact-note">If you'd like to collaborate or have any questions — feel free to reach out. I combine GIS, programming and spatial data science to build production-ready tools and analyses.</p>
-
-        <div class="bottom-sep">
-          <small>Feel free to contact me.</small>
+        <div class="info-item">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 
+            2 0 00-2-2zm0 2l-8 5-8-5h16z"/></svg>
+          <div><strong>Email</strong><br>
+            <a href="mailto:vecihikrtgl@gmail.com" style="color:var(--muted); text-decoration:underline;">vecihikrtgl@gmail.com</a>
+          </div>
         </div>
+
+        <div class="info-item">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 
+            0 006.59 6.59l2.2-2.2a1 1 
+            0 011.11-.21 11.36 11.36 
+            0 003.55.57 1 1 0 011 1v3.4a1 
+            1 0 01-1 1A18 18 0 013 6a1 
+            1 0 011-1h3.4a1 1 0 011 
+            1 11.36 11.36 0 00.57 3.55 
+            1 1 0 01-.21 1.11z"/></svg>
+          <div><strong>Phone</strong><br>+90 505 706 65 89</div>
+        </div>
+
+        <div class="info-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 
+            7c0 5.25 7 13 7 13s7-7.75 
+            7-13a7 7 0 00-7-7z"/></svg>
+          <div><strong>Location</strong><br>Turkey</div>
+        </div>
+
+        <div class="info-item">
+          <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 
+            2.5 0 11.001 5.001A2.5 2.5 
+            0 014.98 3.5zM4 8h2v12H4zM8 
+            8h2v1.71c.27-.5 1-1.71 
+            2.72-1.71 2.94 0 3.48 
+            1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 
+            0-2.01 1.36-2.01 2.75V20H8z"/></svg>
+          <div><strong>LinkedIn</strong><br>
+            <a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" style="color:var(--muted); text-decoration:underline;">linkedin.com/in/vecihiasimkartoglu</a>
+          </div>
+        </div>
+
       </div>
     </div>
-  </section>
+
+  </div>
+</section>
 
 <script>
-  /* ==== Typing animation (only visible on first screen) ==== */
-  const texts = ["Geomatics Engineer","GIS Lead | Developer","GeoSpatial Data Scientist"];
-  const dynamic = document.getElementById('dynamic-part');
-  let tIndex = 0, cIndex = 0;
-  const typeSpeed = 90, delSpeed = 45, pause = 1800;
-
-  function type(){
-    const txt = texts[tIndex];
-    if(cIndex < txt.length){
-      dynamic.textContent += txt[cIndex++];
-      setTimeout(type, typeSpeed);
-    } else {
-      setTimeout(erase, pause);
-    }
+/* typing animation */
+const texts=["Geomatics Engineer","GIS Lead | Developer","GeoSpatial Data Scientist"];
+const dyn=document.getElementById("dynamic-part");
+let i=0, c=0;
+function type(){
+  let t=texts[i];
+  if(c<t.length){
+    dyn.textContent+=t[c++];
+    setTimeout(type,90);
+  }else setTimeout(erase,1500);
+}
+function erase(){
+  let t=texts[i];
+  if(c>0){
+    c--;
+    dyn.textContent=t.substring(0,c);
+    setTimeout(erase,45);
+  }else{
+    i=(i+1)%texts.length;
+    setTimeout(type,120);
   }
-  function erase(){
-    const txt = texts[tIndex];
-    if(cIndex > 0){
-      cIndex--;
-      dynamic.textContent = txt.substring(0,cIndex);
-      setTimeout(erase, delSpeed);
-    } else {
-      tIndex = (tIndex + 1) % texts.length;
-      setTimeout(type, 220);
-    }
-  }
-  type();
+}
+type();
 
-  /* fade out typing when scrolled to about */
-  window.addEventListener('scroll', () => {
-    const container = document.getElementById('text-container');
-    if(window.scrollY > window.innerHeight * 0.55) container.style.opacity = '0';
-    else container.style.opacity = '1';
-  });
+/* fade hero text on scroll */
+window.addEventListener("scroll",()=>{
+  const box=document.getElementById("text-container");
+  box.style.opacity = (window.scrollY > innerHeight*0.55) ? 0 : 1;
+});
 
-  /* Sidebar navigation */
-  function scrollToTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
-  function scrollToAbout(){ window.scrollTo({top: window.innerHeight, behavior:'smooth'}); }
+/* navigation */
+function scrollToTop(){ scrollTo({top:0,behavior:"smooth"}); }
+function scrollToAbout(){ scrollTo({top:innerHeight,behavior:"smooth"}); }
 </script>
 
 </body>
