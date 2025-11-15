@@ -22,17 +22,22 @@ html,body{
 }
 
 /* ---------------------------------------- */
-/* BACKGROUND VIDEO                          */
+/* BACKGROUND VIDEO  - always behind all    */
 /* ---------------------------------------- */
-#bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -2; /* Arkada kalacak şekilde düzeltildi */
-  pointer-events: none;
+#bg-video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-100; /* EN ARKA */
+  pointer-events:none;
+}
+#video-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.28);
+  z-index:-90;
 }
 
 /* ---------------------------------------- */
@@ -66,10 +71,8 @@ html,body{
 /* ---------------------------------------- */
 /* HERO                                     */
 /* ---------------------------------------- */
-#hero {
-  position: relative; /* video üstünde içerik */
-  z-index: 5;
-  height: 100vh;
+#hero{
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -81,18 +84,16 @@ html,body{
   text-shadow:0 6px 24px rgba(0,0,0,.65);
   font-family:monospace;
   pointer-events:none;
-  z-index:6; /* video üstünde yazı */
-  transition: opacity 0.5s ease; /* fade efekti */
 }
 
 /* ---------------------------------------- */
 /* ABOUT PAGE                               */
 /* ---------------------------------------- */
-#about {
-  position: relative;
+#about{
+  min-height:100vh;
+  padding:90px 9%;
+  position:relative;
   z-index:5;
-  min-height: 100vh;
-  padding: 90px 9%;
 }
 
 #about .heading{
@@ -106,7 +107,7 @@ html,body{
   margin-top:12px;
   max-width:1150px;
   text-align:center;
-  font-size:1.3rem;
+  font-size:1.3rem;  /* büyütüldü */
   color:var(--muted);
   line-height:1.75;
 }
@@ -144,7 +145,7 @@ html,body{
 
 /* TEXT */
 .content{
-  font-size:1.22rem;
+  font-size:1.22rem; /* %20 BÜYÜTÜLDÜ */
   line-height:1.75;
   color:#fff;
 }
@@ -188,11 +189,13 @@ html,body{
 </head>
 <body>
 
-<!-- BACKGROUND VIDEO -->
+<!-- video background -->
 <video id="bg-video" autoplay muted loop playsinline>
   <source src="spining_globe.mp4" type="video/mp4">
 </video>
+<div id="video-overlay"></div>
 
+<!-- sidebar -->
 <div id="sidebar">
   <div class="side-btn" onclick="scrollToTop()">
     <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v7h-12v-7h-3z"/></svg>
@@ -204,12 +207,14 @@ html,body{
   </div>
 </div>
 
+<!-- hero -->
 <section id="hero">
   <div id="text-container">
     <span id="static-part">I am a </span><span id="dynamic-part"></span>
   </div>
 </section>
 
+<!-- about -->
 <section id="about">
   <h2 class="heading">ABOUT</h2>
 
@@ -245,6 +250,7 @@ html,body{
       <div class="hr-strong"></div>
 
       <div class="info-list">
+
         <div class="info-item">
           <svg viewBox="0 0 24 24"><path d="M12 2l9 4-9 4-9-4z"/></svg>
           <div><strong>Website</strong><br>
@@ -253,6 +259,7 @@ html,body{
             </a>
           </div>
         </div>
+
         <div class="info-item">
           <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 
       0 002-2V6a2 2 0 00-2-2zm0 2l-8 
@@ -263,13 +270,50 @@ html,body{
             </a>
           </div>
         </div>
+
+        <div class="info-item">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 
+            15.05 0 006.59 6.59l2.2-2.2a1 1 
+            0 011.11-.21 11.36 11.36 
+            0 003.55.57 1 1 0 011 1v3.4a1 
+            1 0 01-1 1A18 18 0 013 6a1 
+            1 0 011-1h3.4a1 1 0 011 
+            1 11.36 11.36 0 00.57 3.55 
+            1 1 0 01-.21 1.11z"/></svg>
+          <div><strong>Phone</strong><br>
+            +90 505 706 65 89
+          </div>
+        </div>
+
+        <div class="info-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 
+            7c0 5.25 7 13 7 13s7-7.75 
+            7-13a7 7 0 00-7-7z"/></svg>
+          <div><strong>Location</strong><br>Turkey</div>
+        </div>
+
+        <div class="info-item">
+          <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 
+            2.5 0 11.001 5.001A2.5 2.5 
+            0 014.98 3.5zM4 8h2v12H4zM8 
+            8h2v1.71c.27-.5 1-1.71 
+            2.72-1.71 2.94 0 3.48 
+            1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 
+            0-2.01 1.36-2.01 2.75V20H8z"/></svg>
+          <div><strong>LinkedIn</strong><br>
+            <a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" style="color:var(--muted); text-decoration:underline;">
+              linkedin.com/in/vecihiasimkartoglu
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
 
 <script>
-/* Typing animation */
+/* typing animation */
 const texts=["Geomatics Engineer","GIS Lead | Developer","Geospatial Data Scientist"];
 const dyn=document.getElementById("dynamic-part");
 let i=0, c=0;
@@ -293,14 +337,13 @@ function erase(){
 }
 type();
 
-/* Fade hero text on scroll */
+/* fade hero text */
 window.addEventListener("scroll",()=>{
   const box=document.getElementById("text-container");
-  let fadePoint = window.innerHeight * 0.55;
-  box.style.opacity = (window.scrollY > fadePoint) ? 0 : 1;
+  box.style.opacity = (window.scrollY > innerHeight*0.55) ? 0 : 1;
 });
 
-/* Navigation */
+/* nav */
 function scrollToTop(){ scrollTo({top:0,behavior:"smooth"}); }
 function scrollToAbout(){ scrollTo({top:innerHeight,behavior:"smooth"}); }
 </script>
