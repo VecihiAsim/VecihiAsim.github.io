@@ -31,16 +31,21 @@ html,body{
 /* BACKGROUND VIDEO - TÜM SAYFALARDA ÇALIŞIR */
 /* ---------------------------------------- */
 #bg-video{
-  position:fixed; /* Sabit pozisyon, kaydırmadan etkilenmez */
+  position:fixed;
   inset:0;
   width:100%;
   height:100%;
   object-fit:cover;
-  z-index:-100; /* Tüm içeriğin arkasında */
+  z-index:-100;
   pointer-events:none;
 }
+/* Videonun üzerine yarı şeffaf katman ekle */
 #video-overlay{
-  display:none;
+  /* display:none; satırı KALDIRILDI */
+  position:fixed;
+  inset:0;
+  background:rgba(0, 0, 0, 0.45); /* %45 siyah opaklık */
+  z-index:-99; /* Videonun hemen üstü */
 }
 /* ---------------------------------------- */
 /* LEFT MENU                                */
