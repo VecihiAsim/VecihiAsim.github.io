@@ -24,27 +24,31 @@ html,body{
 /* ---------------------------------------- */
 /* BACKGROUND VIDEO  - always behind all    */
 /* ---------------------------------------- */
-#bg-video {
+#video-bg-wrapper {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+
+#bg-video {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  z-index: -1; /* -100 yerine -1 yeterli */
   pointer-events: none;
 }
 
 #video-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,.28);
-  z-index: 0; /* overlay video üstünde ama içerik altında */
 }
- 
+
 
 /* ---------------------------------------- */
 /* LEFT MENU                                */
@@ -83,7 +87,7 @@ html,body{
   justify-content:center;
   align-items:center;
   position:relative;
-  z-index:1; /* yeni ekleme */
+  z-index:1;
 }
 #text-container{
   font-size:3.3rem;
@@ -99,14 +103,14 @@ html,body{
 /* ---------------------------------------- */
 section{
   min-height:100vh;
-  padding:90px 9%;
+  padding:15px 9%;
   position:relative;
   z-index:5;
 }
 
 .heading{
   text-align:center;
-  font-size:2.6rem;
+  font-size:3rem;
   font-weight:900;
 }
 
@@ -115,7 +119,7 @@ section{
   margin-top:12px;
   max-width:1150px;
   text-align:center;
-  font-size:1.3rem;
+  font-size:1.5rem;
   color:var(--muted);
   line-height:1.75;
 }
@@ -153,7 +157,7 @@ section{
 
 /* TEXT */
 .content{
-  font-size:1.22rem;
+  font-size:1.35rem;
   line-height:1.75;
   color:#fff;
 }
@@ -179,7 +183,7 @@ section{
 .info-item{
   display:flex;
   gap:12px;
-  font-size:1.1rem;
+  font-size:1.3rem;
   color:var(--muted);
 }
 .info-item svg{
@@ -213,7 +217,7 @@ section{
 }
 .skill-card h4{
   margin:0 0 12px 0;
-  font-size:1.4rem;
+  font-size:1.5rem;
 }
 .skill-card p{
   margin:0;
@@ -234,23 +238,39 @@ section{
 <body>
 
 <!-- video background -->
-<video id="bg-video" autoplay muted loop playsinline>
-  <source src="spining_globe.mp4" type="video/mp4">
-</video>
-<div id="video-overlay"></div>
+<div id="video-bg-wrapper">
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="spining_globe.mp4" type="video/mp4">
+  </video>
+  <div id="video-overlay"></div>
+</div>
 
 <!-- sidebar -->
 <div id="sidebar">
-  <div class="side-btn" onclick="scrollToTop()">
+  <!-- 1. page: Hero -->
+  <div class="side-btn" onclick="scrollToTop()" title="Home">
     <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v7h-12v-7h-3z"/></svg>
   </div>
-  <div class="side-btn" onclick="scrollToAbout()">
+
+  <!-- 2. page: About -->
+  <div class="side-btn" onclick="scrollToAbout()" title="About">
     <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 
       2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 
       1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
   </div>
-  <div class="side-btn" onclick="scrollToSkills()">
-    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-8-4 8-4 8 4-8 4z"/></svg>
+
+  <!-- 3. page: Skills -->
+  <div class="side-btn" onclick="scrollToSkills()" title="Skills">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 13h2v-2H3v2zm4 0h14v-2H7v2zm0 4h10v-2H7v2zm0-8h12V7H7v2z"/>
+    </svg>
+  </div>
+
+  <!-- 4. page: Education & Experience -->
+  <div class="side-btn" onclick="scrollToEduExp()" title="Education & Experience">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm0 7l-9-4 9-4 9 4-9 4z"/>
+    </svg>
   </div>
 </div>
 
@@ -360,94 +380,309 @@ section{
 <section id="skills">
   <h2 class="heading">SKILLS</h2>
   <p class="intro">
-    Throughout my career, I have gained valuable experiences and education in various domains.
-    Here are some of the key skills I have developed and mastered over time.
+    A collection of my core technical competencies — from spatial data engineering to software development,
+    automation, and modern project management.
   </p>
-  <div id="skills-grid">
-    <div class="skill-card">
-      <div class="skill-card-inner">
-        <img src="python-logo.png" alt="Python Logo" class="skill-logo">
-        <div>
-          <h4>Python</h4>
-          <p>Image Processing, Computer Vision, AI</p>
-        </div>
+
+  <div id="skills-list">
+
+    <!-- PYTHON -->
+    <div class="skill-block">
+      <div class="skill-icon">
+        <img src="python-logo.png" alt="Python Logo">
+      </div>
+      <div class="skill-text">
+        <h3>Python Development</h3>
+        <ul>
+          <li>Programming for geospatial automation and data pipelines</li>
+          <li>Image Processing & Computer Vision</li>
+          <li>Machine Learning & AI model development</li>
+          <li>Custom tool creation for GIS and Remote Sensing workflows</li>
+        </ul>
       </div>
     </div>
-    <div class="skill-card">
-      <div class="skill-card-inner">
-        <img src="gis-logo.png" alt="GIS Logo" class="skill-logo">
-        <div>
-          <h4>GIS & Remote Sensing</h4>
-          <p>QGIS, ArcGIS, PostGIS</p>
-        </div>
+
+    <!-- GIS -->
+    <div class="skill-block">
+      <div class="skill-icon">
+        <img src="gis-logo.png" alt="GIS Logo">
+      </div>
+      <div class="skill-text">
+        <h3>GIS & Remote Sensing</h3>
+        <ul>
+          <li>Advanced QGIS & ArcGIS usage</li>
+          <li>Tool & plugin development for automation</li>
+          <li>Spatial analysis and geoprocessing workflows</li>
+          <li>Imagery interpretation & remote sensing solutions</li>
+          <li>Designing location-based applications & services</li>
+        </ul>
       </div>
     </div>
-    <div class="skill-card">
-      <div class="skill-card-inner">
-        <img src="cad-logo.png" alt="CAD Logo" class="skill-logo">
-        <div>
-          <h4>CAD</h4>
-          <p>AutoCAD, NetCAD</p>
-        </div>
+
+    <!-- CAD -->
+    <div class="skill-block">
+      <div class="skill-icon">
+        <img src="cad-logo.png" alt="CAD Logo">
+      </div>
+      <div class="skill-text">
+        <h3>CAD Engineering</h3>
+        <ul>
+          <li>Professional AutoCAD & NetCAD usage</li>
+          <li>Drafting and technical drawing for engineering projects</li>
+          <li>Automation with AutoLISP scripting</li>
+        </ul>
       </div>
     </div>
-    <div class="skill-card">
-      <div class="skill-card-inner">
-        <img src="jira-logo.png" alt="JIRA Logo" class="skill-logo">
-        <div>
-          <h4>JIRA</h4>
-          <p>Project & Task Management</p>
-        </div>
+
+    <!-- JIRA -->
+    <div class="skill-block">
+      <div class="skill-icon">
+        <img src="jira-logo.png" alt="JIRA Logo">
+      </div>
+      <div class="skill-text">
+        <h3>Project Management (JIRA)</h3>
+        <ul>
+          <li>Project and task planning</li>
+          <li>Agile team coordination (Scrum / Kanban)</li>
+          <li>Board creation, issue workflows & automation</li>
+        </ul>
       </div>
     </div>
+
   </div>
 </section>
 
 <style>
 /* skills grid update */
-#skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 28px;
-  max-width: 1200px;
-  margin: 40px auto 0 auto;
-}
-
-.skill-card {
-  background: rgba(20, 20, 20, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 22px 18px;
-  transition: 0.3s;
-}
-
-.skill-card:hover {
-  background: var(--accent);
-  color: #fff;
-  transform: translateY(-6px);
-}
-
-.skill-card-inner {
+#skills-list {
+  max-width: 800px; 
+  margin: 40px auto;
   display: flex;
-  align-items: center;
-  gap: 18px;
+  flex-direction: column; 
+  gap: 20px;
 }
 
-.skill-logo {
+.skill-block {
+  background: rgba(20, 20, 20, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 16px 16px; 
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+  transition: 0.25s ease;
+}
+
+.skill-block:hover {
+  background: var(--accent);
+  transform: translateY(-4px);
+  color: #fff;
+}
+
+.skill-icon img {
   width: 50px;
   height: 50px;
   object-fit: contain;
 }
 
-.skill-card h4 {
-  margin: 0 0 6px 0;
-  font-size: 1.3rem;
+.skill-text {
+  flex: 1;
 }
 
-.skill-card p {
+.skill-text h3 {
+  margin: 0 0 6px 0;
+  font-size: 1.25rem; 
+}
+
+.skill-text ul {
   margin: 0;
-  font-size: 1rem;
+  padding-left: 18px;
+  line-height: 1.4;
+  font-size: 0.95rem; 
+}
+
+.skill-text li {
+  margin-bottom: 4px;
+}
+
+/* Mobile */
+@media(max-width: 600px){
+  #skills-list {
+    width: 90%;
+  }
+  .skill-block {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .skill-text {
+    width: 100%;
+  }
+}
+</style>
+
+<!-- education & experience -->
+<section id="education-experience">
+  <!-- EDUCATION PART -->
+  <div class="edu-section">
+    <h2 class="heading">EDUCATION</h2>
+    <p class="intro">Academic background highlighting key studies and achievements.</p>
+
+    <div class="edu-cards">
+      <div class="edu-card">
+        <h3>Yıldız Technical University</h3>
+        <span>BSc & MSc, Geomatics Engineering (2016-2021)</span>
+        <p>Graduated with a degree of 3.31. Focused on GIS, Spatial Data, Remote Sensing, Programming, Computer Vision, AI.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- EXPERIENCE PART -->
+  <div class="exp-section">
+    <h2 class="heading">EXPERIENCE</h2>
+    <p class="intro">Professional journey and key roles held in the industry.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">Oct 2023 - Present</div>
+        <div class="timeline-content">
+          <h3>GIS Lead | Developer</h3>
+          <p>Responsible for project management, programming, GIS preparation, processing, and analysis.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Apr 2022 - Oct 2023</div>
+        <div class="timeline-content">
+          <h3>GIS Engineer | Developer</h3>
+          <p>Developed GIS applications, Python programming, indoor & outdoor mapping, GIS preparation, processing & analysis, location-based statistics, and design & styling.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2019-2020(Intern) / Jan 2022 - Mar 2022(Engineer)</div>
+        <div class="timeline-content">
+          <h3>Computer Vision Engineer</h3>
+          <p>Worked on computer vision, deep learning, machine learning, image processing, and programming.</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<style>
+/* EDUCATION & EXPERIENCE STYLES */
+#education-experience {
+  padding: 20px 10%;
+  background: rgba(10,10,10,0.35);
+}
+
+/* EDUCATION CARDS */
+.edu-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  margin: 30px auto 0 auto;
+}
+
+.edu-card {
+  background: rgba(20,20,20,0.45);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 24px;
+  transition: 0.25s ease;
+}
+
+.edu-card:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-4px);
+}
+
+.edu-card h3 {
+  margin: 0 0 6px 0;
+  font-size: 1.55rem;
+}
+
+.edu-card span {
+  font-size: 1.15rem;
   color: var(--muted);
+}
+
+.edu-card p {
+  margin-top: 8px;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+/* EXPERIENCE TIMELINE */
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 30px auto 0 auto;
+  padding-left: 20px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 30px;
+  padding-left: 30px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.timeline-date {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.timeline-content h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.35rem;
+}
+
+.timeline-content p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #fff;
+}
+
+/* MOBILE */
+@media(max-width: 700px){
+  .edu-cards, .timeline {
+    width: 100%;
+  }
+  .timeline-item {
+    padding-left: 25px;
+  }
 }
 </style>
 
@@ -486,6 +721,8 @@ window.addEventListener("scroll",()=>{
 function scrollToTop(){ scrollTo({top:0,behavior:"smooth"}); }
 function scrollToAbout(){ scrollTo({top:innerHeight,behavior:"smooth"}); }
 function scrollToSkills(){ scrollTo({top:innerHeight*2,behavior:"smooth"}); }
+function scrollToEduExp() {scrollTo({ top: innerHeight*3, behavior: "smooth" });}
+
 </script>
 
 </body>
