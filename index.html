@@ -228,10 +228,46 @@ section{
 /* ---------------------------------------- */
 /* MEDIA QUERIES                            */
 @media(max-width:900px){
-  .about-grid{ grid-template-columns:1fr; }
-  #text-container{ font-size:2.2rem; }
-  .info-list{ grid-template-columns:1fr; }
+  section:not(#hero) { padding: 40px 5% 100px 5%; }
+  .about-grid{ grid-template-columns:1fr; gap:25px; }
+  .profile-photo { max-width: 350px; margin: 0 auto; }
+  #text-container{ font-size:2.2rem; text-align:center; padding:0 20px; }
+  .info-list{ grid-template-columns:1fr; gap:15px; }
   #skills-grid{ grid-template-columns:1fr; }
+  
+  #sidebar {
+    left: 50%;
+    top: auto;
+    bottom: 25px;
+    transform: translateX(-50%);
+    flex-direction: row;
+    gap: 15px;
+    background: rgba(15,15,15,0.85);
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    width: max-content;
+  }
+  .side-btn {
+    width: 46px;
+    height: 46px;
+    background: rgba(255,255,255,0.05);
+  }
+  .side-btn:hover { transform: translateY(-3px); }
+}
+
+@media(max-width:600px){
+  #text-container{ font-size:1.6rem; display: flex; flex-direction: column; gap: 10px; }
+  .heading { font-size: 2rem; }
+  .intro { font-size: 1.15rem; }
+  .content { font-size: 1.15rem; }
+  .content h3 { font-size: 1.3rem; }
+  .info-item { font-size: 1.05rem; }
+  .info-item a { word-break: break-word; }
+  #sidebar { gap: 10px; padding: 10px 15px; width: auto; min-width: 90%; justify-content: space-around; bottom: 15px; }
+  .side-btn { width: 44px; height: 44px; }
+  .profile-photo { max-width: 280px; }
 }
 </style>
 </head>
@@ -580,6 +616,9 @@ section{
   padding: 20px 10%;
   background: rgba(10,10,10,0.35);
 }
+@media(max-width:900px){
+  #education-experience { padding: 40px 5% 100px 5%; }
+}
 
 /* EDUCATION CARDS */
 .edu-cards {
@@ -718,10 +757,10 @@ window.addEventListener("scroll",()=>{
 });
 
 /* nav */
-function scrollToTop(){ scrollTo({top:0,behavior:"smooth"}); }
-function scrollToAbout(){ scrollTo({top:innerHeight,behavior:"smooth"}); }
-function scrollToSkills(){ scrollTo({top:innerHeight*2,behavior:"smooth"}); }
-function scrollToEduExp() {scrollTo({ top: innerHeight*3, behavior: "smooth" });}
+function scrollToTop(){ window.scrollTo({top:0,behavior:"smooth"}); }
+function scrollToAbout(){ document.getElementById('about').scrollIntoView({behavior:"smooth"}); }
+function scrollToSkills(){ document.getElementById('skills').scrollIntoView({behavior:"smooth"}); }
+function scrollToEduExp() { document.getElementById('education-experience').scrollIntoView({behavior:"smooth"}); }
 
 </script>
 
