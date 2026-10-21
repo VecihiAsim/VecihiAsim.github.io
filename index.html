@@ -1,768 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Vecihi - Geomatics Engineer</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vecihi Asım Kartoğlu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Vecihi Asım Kartoğlu, Geomatics Engineer and GIS Lead | Developer. GIS, remote sensing, spatial data science and Python automation.">
+<meta name="theme-color" content="#07070c">
+<meta property="og:title" content="Vecihi Asım Kartoğlu, Geomatics Engineer">
+<meta property="og:description" content="GIS Lead | Developer working on spatial analysis, automation, digital mapping and geodata pipelines.">
+<meta property="og:image" content="https://vecihiasim.github.io/assets/og.jpg">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
+/* Layout: a map sheet. Spinning globe as the base layer, content sheets laid over it,
+   a mono "legend" voice for metadata (dates, datum, coordinates). Dark by design: it is space. */
 :root{
-  --accent:#6b00ff;
-  --muted:rgba(255,255,255,.82);
+  --ink:#07070c;            /* page ground */
+  --sheet:rgba(9,9,16,.86); /* content sheet over the globe */
+  --panel:#11111c;          /* raised surfaces */
+  --line:rgba(236,235,245,.11);
+  --fg:#ecebf5;
+  --muted:#a6a4bb;
+  --accent:#8f63ff;         /* the site's violet, lifted for contrast on black */
+  --accent-soft:rgba(143,99,255,.16);
+
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+
+  --s-1:.8125rem; --s0:1rem; --s1:1.125rem; --s2:1.375rem; --s3:clamp(1.75rem,1.2rem + 2.4vw,2.75rem);
+  --s4:clamp(2.6rem,1.4rem + 6vw,6rem);
+  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+  --tabbar-h:64px;
+  color-scheme:dark;
 }
-html,body{
-  margin:0;
-  padding:0;
-  width:100%;
-  height:100%;
-  background:#000;
-  color:#fff;
-  font-family:"Segoe UI",sans-serif;
-  scroll-behavior:smooth;
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--ink);-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--ink);color:var(--fg);
+  font-family:var(--f-body);font-size:var(--s0);line-height:1.6;
+  -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:rgba(143,99,255,.25);
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3,h4{text-wrap:balance;margin:0}
+p{margin:0;text-wrap:pretty}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+[hidden]{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:var(--gutter-l);top:-60px;z-index:300;background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:600}
+.skip:focus{top:calc(10px + env(safe-area-inset-top, 0px))}
+.wrap{max-width:1120px;margin-inline:auto;padding-left:var(--gutter-l);padding-right:var(--gutter-r)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+
+/* ---------- globe base layer ---------- */
+.globe{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--ink)}
+.globe video{width:100%;height:100%;object-fit:cover}
+.globe::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 40%,rgba(7,7,12,.05),rgba(7,7,12,.55)),linear-gradient(to top,rgba(7,7,12,.85),rgba(7,7,12,0) 55%)}
+.hero .eyebrow{color:var(--fg);text-shadow:0 2px 12px rgba(0,0,0,.8)}
+
+/* ---------- top bar (desktop) ---------- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:150;background:var(--ink)}
+.topbar{
+  position:fixed;top:env(safe-area-inset-top, 0px);left:0;right:0;z-index:100;
+  transition:background-color .3s ease,border-color .3s ease;border-bottom:1px solid transparent;
+}
+.topbar.solid{background:rgba(7,7,12,.82);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom-color:var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:800;font-stretch:115%;letter-spacing:.02em;min-height:44px}
+.brand-mark{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--fg);display:grid;place-items:center;position:relative}
+.brand-mark::before,.brand-mark::after{content:"";position:absolute;background:var(--fg)}
+.brand-mark::before{width:1.5px;height:44px}
+.brand-mark::after{height:1.5px;width:44px}
+.brand-mark i{width:8px;height:8px;border-radius:50%;background:var(--accent);position:relative;z-index:1}
+.links{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.links a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;text-decoration:none;font-size:.95rem;color:var(--muted);transition:color .2s ease,background-color .2s ease}
+.links a:hover{color:var(--fg)}
+.links a[aria-current="true"]{color:var(--fg);background:var(--accent-soft)}
+
+/* ---------- bottom tab bar (phones) ---------- */
+.tabbar{display:none}
+
+/* ---------- hero ---------- */
+.hero{position:relative;z-index:1;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-block:120px 56px}
+.hero .wrap{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:32px}
+.hero h1{font-family:var(--f-display);font-size:var(--s4);font-weight:850;font-stretch:118%;line-height:.92;letter-spacing:-.02em;text-shadow:0 8px 40px rgba(0,0,0,.6)}
+.hero h1 span{display:block}
+.role{margin-top:22px;font-family:var(--f-mono);font-size:clamp(1rem,.9rem + .6vw,1.35rem);color:var(--fg);min-height:1.6em}
+.role .caret{display:inline-block;width:.6ch;height:1.15em;vertical-align:-.2em;background:var(--accent);margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:600;text-decoration:none;touch-action:manipulation;transition:transform .2s ease,background-color .2s ease,border-color .2s ease}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{border:1px solid rgba(236,235,245,.3);background:rgba(7,7,12,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+@media (hover:hover){.btn:hover{transform:translateY(-2px)}.btn-ghost:hover{border-color:var(--fg)}}
+.btn svg{width:18px;height:18px;fill:currentColor}
+
+.legend{font-family:var(--f-mono);font-size:var(--s-1);background:rgba(7,7,12,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:270px}
+.legend dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0}
+.legend dt{color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.legend dd{margin:0;font-variant-numeric:tabular-nums}
+.scalebar{display:flex;margin-top:12px;height:6px;border:1px solid var(--fg)}
+.scalebar i{flex:1}.scalebar i:nth-child(odd){background:var(--fg)}
+.scale-label{display:flex;justify-content:space-between;margin-top:4px;color:var(--muted);font-size:.72rem}
+
+.globe-toggle{position:absolute;right:var(--gutter-r);top:calc(76px);z-index:2;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(7,7,12,.55);color:var(--fg);display:grid;place-items:center;cursor:pointer;touch-action:manipulation}
+.globe-toggle svg{width:16px;height:16px;fill:currentColor}
+
+/* ---------- content sheets ---------- */
+main{position:relative;z-index:1}
+.sheet{background:var(--sheet);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);border-top:1px solid var(--line);padding-block:clamp(64px,10vw,120px);scroll-margin-top:64px}
+.sheet-head{display:grid;gap:14px;max-width:760px;margin-bottom:clamp(36px,5vw,56px)}
+.sheet-head h2{font-family:var(--f-display);font-size:var(--s3);font-weight:800;font-stretch:112%;line-height:1.05;letter-spacing:-.01em}
+.lede{font-size:var(--s1);color:var(--muted);max-width:62ch}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
+.portrait{position:relative;margin:0}
+.portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+.portrait figcaption{margin-top:10px;font-family:var(--f-mono);font-size:.75rem;color:var(--muted);display:flex;justify-content:space-between;gap:12px}
+.prose{display:grid;gap:18px;font-size:var(--s1);max-width:62ch;min-width:0}
+.prose strong{color:var(--fg);font-weight:650}
+.focus-tags{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:6px 0 0}
+.focus-tags li{font-family:var(--f-mono);font-size:.8rem;padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.skill{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;grid-template-columns:56px minmax(0,1fr);gap:18px;align-items:start;transition:border-color .25s ease,transform .25s ease}
+@media (hover:hover){.skill:hover{border-color:rgba(143,99,255,.6);transform:translateY(-3px)}}
+.skill img{width:56px;height:56px;object-fit:contain}
+.skill h3{font-family:var(--f-display);font-size:var(--s2);font-weight:750;font-stretch:108%;line-height:1.2;margin-bottom:12px}
+.skill ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;color:var(--muted)}
+.skill li{position:relative;padding-left:18px}
+.skill li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border:1.5px solid var(--accent);border-radius:50%}
+
+/* education + experience */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(36px,6vw,80px)}
+.col-title{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.edu .school{font-family:var(--f-display);font-size:var(--s2);font-weight:750;font-stretch:108%;line-height:1.2}
+.edu .meta{margin-top:6px;color:var(--accent);font-family:var(--f-mono);font-size:.9rem}
+.edu p{margin-top:12px;color:var(--muted)}
+.gpa{display:flex;align-items:baseline;gap:10px;margin-top:20px}
+.gpa b{font-family:var(--f-display);font-size:2.4rem;font-weight:800;font-stretch:115%;line-height:1;font-variant-numeric:tabular-nums}
+.gpa span{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+
+.timeline{list-style:none;margin:0;padding:0;display:grid}
+.job{display:grid;grid-template-columns:20px minmax(0,1fr);gap:16px;position:relative;padding-bottom:32px}
+.job:last-child{padding-bottom:0}
+.job::before{content:"";position:absolute;left:9px;top:22px;bottom:-2px;width:2px;background:var(--line)}
+.job:last-child::before{display:none}
+.dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--accent);margin-top:3px;display:grid;place-items:center;background:var(--ink)}
+.job.now .dot::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.when{font-family:var(--f-mono);font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.job h4{font-family:var(--f-display);font-size:var(--s2);font-weight:750;font-stretch:108%;line-height:1.25;margin:4px 0 8px}
+.job p{color:var(--muted);max-width:60ch}
+.badge{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--fg);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;vertical-align:1px}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.contact{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 14px 14px 16px;min-width:0}
+.contact .ico{width:44px;height:44px;border-radius:10px;background:var(--accent-soft);display:grid;place-items:center}
+.contact .ico svg{width:20px;height:20px;fill:var(--accent)}
+.contact .label{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.contact .value{display:block;font-weight:600;overflow-wrap:anywhere;text-decoration:none}
+.contact a.value{text-decoration:underline;text-decoration-color:rgba(143,99,255,.6);text-underline-offset:3px}
+.copy{min-width:44px;height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--muted);font:500 .8rem var(--f-mono);cursor:pointer;touch-action:manipulation;transition:color .2s ease,border-color .2s ease}
+.copy:hover{color:var(--fg);border-color:var(--fg)}
+.copy.done{color:var(--fg);border-color:var(--accent)}
+
+footer{position:relative;z-index:1;background:var(--ink);border-top:1px solid var(--line);padding-block:28px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+
+/* ---------- tablet ---------- */
+@media (max-width:900px){
+  .about{grid-template-columns:minmax(0,1fr)}
+  .portrait{max-width:340px}
+  .skills,.split{grid-template-columns:minmax(0,1fr)}
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .legend{min-width:0;max-width:360px}
 }
 
-/* ---------------------------------------- */
-/* BACKGROUND VIDEO  - always behind all    */
-/* ---------------------------------------- */
-#video-bg-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
+/* ---------- phones ---------- */
+@media (max-width:720px){
+  .links{display:none}
+  .topbar .wrap{height:56px}
+  .globe-toggle{top:64px}
+  .hero{padding-block:96px calc(var(--tabbar-h) + 32px + env(safe-area-inset-bottom, 0px))}
+  .hero h1{font-stretch:105%}
+  .cta .btn{flex:1 1 auto}
+  .legend{font-size:.75rem}
+  .contact-grid{grid-template-columns:minmax(0,1fr)}
+  .skill{grid-template-columns:44px minmax(0,1fr);padding:20px;gap:14px}
+  .skill img{width:44px;height:44px}
+  .sheet{scroll-margin-top:56px}
+  footer{padding-bottom:calc(var(--tabbar-h) + 28px + env(safe-area-inset-bottom, 0px))}
 
-#bg-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
-}
-
-#video-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,.28);
-}
-
-
-/* ---------------------------------------- */
-/* LEFT MENU                                */
-/* ---------------------------------------- */
-#sidebar{
-  position:fixed;
-  left:22px;
-  top:50%;
-  transform:translateY(-50%);
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-  z-index:200;
-}
-.side-btn{
-  width:52px;
-  height:52px;
-  border-radius:12px;
-  background:rgba(20,20,20,.55);
-  border:2px solid rgba(255,255,255,.08);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  cursor:pointer;
-  transition:.25s;
-}
-.side-btn:hover{ background:var(--accent); transform:translateY(-3px); }
-.side-btn svg{ width:26px; height:26px; fill:#fff; }
-
-/* ---------------------------------------- */
-/* HERO                                     */
-/* ---------------------------------------- */
-#hero{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:relative;
-  z-index:1;
-}
-#text-container{
-  font-size:3.3rem;
-  font-weight:800;
-  letter-spacing:1px;
-  text-shadow:0 6px 24px rgba(0,0,0,.65);
-  font-family:monospace;
-  pointer-events:none;
-}
-
-/* ---------------------------------------- */
-/* ABOUT PAGE                               */
-/* ---------------------------------------- */
-section{
-  min-height:100vh;
-  padding:15px 9%;
-  position:relative;
-  z-index:5;
-}
-
-.heading{
-  text-align:center;
-  font-size:3rem;
-  font-weight:900;
-}
-
-.intro{
-  margin:auto;
-  margin-top:12px;
-  max-width:1150px;
-  text-align:center;
-  font-size:1.5rem;
-  color:var(--muted);
-  line-height:1.75;
-}
-
-.sep{
-  width:92%;
-  max-width:1300px;
-  margin:28px auto;
-  border-top:1px solid rgba(255,255,255,.12);
-}
-
-.about-grid{
-  width:100%;
-  max-width:1250px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:400px 1fr;
-  align-items:start;
-  gap:40px;
-}
-
-/* PHOTO */
-.profile-photo{
-  border-radius:10px;
-  overflow:hidden;
-  border:2px solid rgba(255,255,255,.12);
-  box-shadow:0 14px 38px rgba(0,0,0,.55);
-}
-.profile-photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  aspect-ratio:3/4;
-}
-
-/* TEXT */
-.content{
-  font-size:1.35rem;
-  line-height:1.75;
-  color:#fff;
-}
-.content h3{
-  margin:0 0 12px 0;
-  font-size:1.55rem;
-  font-weight:800;
-}
-
-.hr-strong{
-  height:3px;
-  margin:24px 0;
-  background:linear-gradient(90deg,var(--accent),rgba(107,0,255,.2));
-  border-radius:4px;
-}
-
-.info-list{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px 26px;
-  margin-top:12px;
-}
-.info-item{
-  display:flex;
-  gap:12px;
-  font-size:1.3rem;
-  color:var(--muted);
-}
-.info-item svg{
-  width:22px;
-  height:22px;
-  fill:var(--accent);
-}
-
-/* ---------------------------------------- */
-/* SKILLS PAGE                              */
-/* ---------------------------------------- */
-#skills-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:28px;
-  max-width:1200px;
-  margin:40px auto 0 auto;
-}
-.skill-card{
-  background:rgba(20,20,20,.45);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:10px;
-  padding:28px 22px;
-  text-align:center;
-  transition:.3s;
-}
-.skill-card:hover{
-  background:var(--accent);
-  color:#fff;
-  transform:translateY(-6px);
-}
-.skill-card h4{
-  margin:0 0 12px 0;
-  font-size:1.5rem;
-}
-.skill-card p{
-  margin:0;
-  font-size:1rem;
-  color:var(--muted);
-}
-
-/* ---------------------------------------- */
-/* MEDIA QUERIES                            */
-@media(max-width:900px){
-  section:not(#hero) { padding: 40px 5% 100px 5%; }
-  .about-grid{ grid-template-columns:1fr; gap:25px; }
-  .profile-photo { max-width: 350px; margin: 0 auto; }
-  #text-container{ font-size:2.2rem; text-align:center; padding:0 20px; }
-  .info-list{ grid-template-columns:1fr; gap:15px; }
-  #skills-grid{ grid-template-columns:1fr; }
-  
-  #sidebar {
-    left: 50%;
-    top: auto;
-    bottom: 25px;
-    transform: translateX(-50%);
-    flex-direction: row;
-    gap: 15px;
-    background: rgba(15,15,15,0.85);
-    padding: 10px 20px;
-    border-radius: 25px;
-    border: 1px solid rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
-    width: max-content;
+  .tabbar{
+    display:block;position:fixed;left:0;right:0;bottom:0;z-index:120;
+    padding:6px var(--gutter-r) calc(6px + env(safe-area-inset-bottom, 0px)) var(--gutter-l);
+    background:rgba(9,9,16,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    border-top:1px solid var(--line);
   }
-  .side-btn {
-    width: 46px;
-    height: 46px;
-    background: rgba(255,255,255,0.05);
-  }
-  .side-btn:hover { transform: translateY(-3px); }
+  .tabbar ul{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));max-width:480px}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;border-radius:12px;text-decoration:none;color:var(--muted);font-size:.68rem;font-weight:600;letter-spacing:.02em;touch-action:manipulation}
+  .tabbar svg{width:22px;height:22px;fill:currentColor}
+  .tabbar a[aria-current="true"]{color:var(--fg)}
+  .tabbar a[aria-current="true"] svg{fill:var(--accent)}
+}
+@media (max-width:380px){
+  .legend dl{grid-template-columns:minmax(0,1fr)}
+  .legend dt{margin-top:4px}
 }
 
-@media(max-width:600px){
-  #text-container{ font-size:1.6rem; display: flex; flex-direction: column; gap: 10px; }
-  .heading { font-size: 2rem; }
-  .intro { font-size: 1.15rem; }
-  .content { font-size: 1.15rem; }
-  .content h3 { font-size: 1.3rem; }
-  .info-item { font-size: 1.05rem; }
-  .info-item a { word-break: break-word; }
-  #sidebar { gap: 10px; padding: 10px 15px; width: auto; min-width: 90%; justify-content: space-around; bottom: 15px; }
-  .side-btn { width: 44px; height: 44px; }
-  .profile-photo { max-width: 280px; }
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
 }
 </style>
 </head>
 <body>
+<a class="skip" href="#about">Skip to content</a>
 
-<!-- video background -->
-<div id="video-bg-wrapper">
-  <video id="bg-video" autoplay muted loop playsinline>
+<div class="globe" aria-hidden="true">
+  <video id="globe-video" autoplay muted loop playsinline preload="auto">
     <source src="spining_globe.mp4" type="video/mp4">
   </video>
-  <div id="video-overlay"></div>
 </div>
 
-<!-- sidebar -->
-<div id="sidebar">
-  <!-- 1. page: Hero -->
-  <div class="side-btn" onclick="scrollToTop()" title="Home">
-    <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v7h-12v-7h-3z"/></svg>
+<header class="topbar" id="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Vecihi Asım Kartoğlu, back to top">
+      <span class="brand-mark" aria-hidden="true"><i></i></span>
+      <span translate="no">VECİHİ</span>
+    </a>
+    <nav aria-label="Sections">
+      <ul class="links">
+        <li><a href="#about" data-nav="about">About</a></li>
+        <li><a href="#skills" data-nav="skills">Skills</a></li>
+        <li><a href="#experience" data-nav="experience">Experience</a></li>
+        <li><a href="#contact" data-nav="contact">Contact</a></li>
+      </ul>
+    </nav>
   </div>
+</header>
 
-  <!-- 2. page: About -->
-  <div class="side-btn" onclick="scrollToAbout()" title="About">
-    <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 
-      2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 
-      1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-  </div>
-
-  <!-- 3. page: Skills -->
-  <div class="side-btn" onclick="scrollToSkills()" title="Skills">
-    <svg viewBox="0 0 24 24">
-      <path d="M3 13h2v-2H3v2zm4 0h14v-2H7v2zm0 4h10v-2H7v2zm0-8h12V7H7v2z"/>
-    </svg>
-  </div>
-
-  <!-- 4. page: Education & Experience -->
-  <div class="side-btn" onclick="scrollToEduExp()" title="Education & Experience">
-    <svg viewBox="0 0 24 24">
-      <path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm0 7l-9-4 9-4 9 4-9 4z"/>
-    </svg>
-  </div>
-</div>
-
-<!-- hero -->
-<section id="hero">
-  <div id="text-container">
-    <span id="static-part">I am a </span><span id="dynamic-part"></span>
+<section class="hero" id="top" aria-label="Introduction">
+  <button class="globe-toggle" id="globe-toggle" type="button" aria-label="Pause globe animation" aria-pressed="false">
+    <svg id="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+    <svg id="ico-play" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M7 4l13 8-13 8z"/></svg>
+  </button>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Geomatics Engineer</p>
+      <h1 translate="no"><span>Vecihi Asım</span><span>Kartoğlu</span></h1>
+      <p class="role" aria-hidden="true"><span id="role-text">GIS Lead | Developer</span><span class="caret"></span></p>
+      <p class="sr-only">Geomatics Engineer, GIS Lead | Developer, Geospatial Data Scientist.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#contact">Get in touch</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11.001 5.001A2.5 2.5 0 014.98 3.5zM4 8h2v12H4zM8 8h2v1.71c.27-.5 1-1.71 2.72-1.71 2.94 0 3.48 1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2.01 1.36-2.01 2.75V20H8z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+    <aside class="legend" aria-label="Map legend">
+      <dl>
+        <dt>Layer</dt><dd>GIS Lead | Developer</dd>
+        <dt>Datum</dt><dd>WGS 84 · EPSG:4326</dd>
+        <dt>Extent</dt><dd>Turkey · 36–42°&nbsp;N, 26–45°&nbsp;E</dd>
+        <dt>Since</dt><dd>2016 · Yıldız Technical University</dd>
+      </dl>
+      <div class="scalebar" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="scale-label" aria-hidden="true"><span>0</span><span>250</span><span>500&nbsp;km</span></div>
+    </aside>
   </div>
 </section>
 
-<!-- about -->
-<section id="about">
-  <h2 class="heading">ABOUT</h2>
-  <p class="intro">
-    I am a Geomatics Engineer with a strong passion for GIS, Spatial Data Management, Remote Sensing,
-    Computer Vision and Artificial Intelligence.  
-    I currently work as a <strong>GIS Lead | Developer</strong> focusing on spatial analysis,
-    automation, digital mapping and geodata pipelines.
-  </p>
-
-  <div class="sep"></div>
-
-  <div class="about-grid">
-    <div class="profile-photo">
-      <img src="resume.png" alt="">
-    </div>
-    <div class="content">
-      <h3>GIS • Remote Sensing • Spatial Data Science</h3>
-
-      <p>
-        I develop geospatial solutions by combining engineering, data science and software development.
-        My work includes spatial data modeling, attribute/geometry editing systems, enterprise GIS setups,
-        automated workflows, quality control tools and advanced visualization dashboards.
-      </p>
-
-      <p>
-        I also build Python-based geoprocessing tools, machine learning pipelines, imagery analysis,
-        feature extraction systems and location-intelligence applications.
-      </p>
-
-      <div class="hr-strong"></div>
-
-      <div class="info-list">
-        <div class="info-item">
-    <svg viewBox="0 0 24 24"><path d="M12 2l9 4-9 4-9-4z"/></svg>
-    <div><strong>Website</strong><br>
-      <a href="https://vecihiasim.github.io/" target="_blank" style="color:var(--muted); text-decoration:underline;">
-        vecihiasim.github.io
-      </a>
-    </div>
-  </div>
-
-  <div class="info-item">
-    <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 
-0 002-2V6a2 2 0 00-2-2zm0 2l-8 
-5-8-5h16z"/></svg>
-    <div><strong>Email</strong><br>
-      <a href="mailto:vecihikrtgl@gmail.com" style="color:var(--muted); text-decoration:underline;">
-        vecihikrtgl@gmail.com
-      </a>
-    </div>
-  </div>
-
-  <div class="info-item">
-    <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 
-      15.05 0 006.59 6.59l2.2-2.2a1 1 
-      0 011.11-.21 11.36 11.36 
-      0 003.55.57 1 1 0 011 1v3.4a1 
-      1 0 01-1 1A18 18 0 013 6a1 
-      1 0 011-1h3.4a1 1 0 011 
-      1 11.36 11.36 0 00.57 3.55 
-      1 1 0 01-.21 1.11z"/></svg>
-    <div><strong>Phone</strong><br>
-      +90 505 706 65 89
-    </div>
-  </div>
-
-  <div class="info-item">
-    <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 
-      7c0 5.25 7 13 7 13s7-7.75 
-      7-13a7 7 0 00-7-7z"/></svg>
-    <div><strong>Location</strong><br>Turkey</div>
-  </div>
-
-  <div class="info-item">
-    <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 
-      2.5 0 11.001 5.001A2.5 2.5 
-      0 014.98 3.5zM4 8h2v12H4zM8 
-      8h2v1.71c.27-.5 1-1.71 
-      2.72-1.71 2.94 0 3.48 
-      1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 
-      0-2.01 1.36-2.01 2.75V20H8z"/></svg>
-    <div><strong>LinkedIn</strong><br>
-      <a href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" style="color:var(--muted); text-decoration:underline;">
-        linkedin.com/in/vecihiasimkartoglu
-      </a>
-    </div>
-  </div>
-
-</div>
+<main>
+  <section class="sheet" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="sheet-head">
+        <p class="eyebrow">About</p>
+        <h2 id="about-title">I turn spatial data into tools people can use.</h2>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- skills -->
-<section id="skills">
-  <h2 class="heading">SKILLS</h2>
-  <p class="intro">
-    A collection of my core technical competencies — from spatial data engineering to software development,
-    automation, and modern project management.
-  </p>
-
-  <div id="skills-list">
-
-    <!-- PYTHON -->
-    <div class="skill-block">
-      <div class="skill-icon">
-        <img src="python-logo.png" alt="Python Logo">
-      </div>
-      <div class="skill-text">
-        <h3>Python Development</h3>
-        <ul>
-          <li>Programming for geospatial automation and data pipelines</li>
-          <li>Image Processing & Computer Vision</li>
-          <li>Machine Learning & AI model development</li>
-          <li>Custom tool creation for GIS and Remote Sensing workflows</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- GIS -->
-    <div class="skill-block">
-      <div class="skill-icon">
-        <img src="gis-logo.png" alt="GIS Logo">
-      </div>
-      <div class="skill-text">
-        <h3>GIS & Remote Sensing</h3>
-        <ul>
-          <li>Advanced QGIS & ArcGIS usage</li>
-          <li>Tool & plugin development for automation</li>
-          <li>Spatial analysis and geoprocessing workflows</li>
-          <li>Imagery interpretation & remote sensing solutions</li>
-          <li>Designing location-based applications & services</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- CAD -->
-    <div class="skill-block">
-      <div class="skill-icon">
-        <img src="cad-logo.png" alt="CAD Logo">
-      </div>
-      <div class="skill-text">
-        <h3>CAD Engineering</h3>
-        <ul>
-          <li>Professional AutoCAD & NetCAD usage</li>
-          <li>Drafting and technical drawing for engineering projects</li>
-          <li>Automation with AutoLISP scripting</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- JIRA -->
-    <div class="skill-block">
-      <div class="skill-icon">
-        <img src="jira-logo.png" alt="JIRA Logo">
-      </div>
-      <div class="skill-text">
-        <h3>Project Management (JIRA)</h3>
-        <ul>
-          <li>Project and task planning</li>
-          <li>Agile team coordination (Scrum / Kanban)</li>
-          <li>Board creation, issue workflows & automation</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<style>
-/* skills grid update */
-#skills-list {
-  max-width: 800px; 
-  margin: 40px auto;
-  display: flex;
-  flex-direction: column; 
-  gap: 20px;
-}
-
-.skill-block {
-  background: rgba(20, 20, 20, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 16px 16px; 
-  border-radius: 12px;
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  align-items: flex-start;
-  transition: 0.25s ease;
-}
-
-.skill-block:hover {
-  background: var(--accent);
-  transform: translateY(-4px);
-  color: #fff;
-}
-
-.skill-icon img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-}
-
-.skill-text {
-  flex: 1;
-}
-
-.skill-text h3 {
-  margin: 0 0 6px 0;
-  font-size: 1.25rem; 
-}
-
-.skill-text ul {
-  margin: 0;
-  padding-left: 18px;
-  line-height: 1.4;
-  font-size: 0.95rem; 
-}
-
-.skill-text li {
-  margin-bottom: 4px;
-}
-
-/* Mobile */
-@media(max-width: 600px){
-  #skills-list {
-    width: 90%;
-  }
-  .skill-block {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .skill-text {
-    width: 100%;
-  }
-}
-</style>
-
-<!-- education & experience -->
-<section id="education-experience">
-  <!-- EDUCATION PART -->
-  <div class="edu-section">
-    <h2 class="heading">EDUCATION</h2>
-    <p class="intro">Academic background highlighting key studies and achievements.</p>
-
-    <div class="edu-cards">
-      <div class="edu-card">
-        <h3>Yıldız Technical University</h3>
-        <span>BSc & MSc, Geomatics Engineering (2016-2021)</span>
-        <p>Graduated with a degree of 3.31. Focused on GIS, Spatial Data, Remote Sensing, Programming, Computer Vision, AI.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="sep"></div>
-
-  <!-- EXPERIENCE PART -->
-  <div class="exp-section">
-    <h2 class="heading">EXPERIENCE</h2>
-    <p class="intro">Professional journey and key roles held in the industry.</p>
-
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-date">Oct 2023 - Present</div>
-        <div class="timeline-content">
-          <h3>GIS Lead | Developer</h3>
-          <p>Responsible for project management, programming, GIS preparation, processing, and analysis.</p>
+      <div class="about">
+        <figure class="portrait">
+          <img src="assets/portrait.webp" alt="Portrait of Vecihi Asım Kartoğlu" width="628" height="747" loading="lazy" decoding="async">
+          <figcaption><span>Turkey</span><span>GIS · RS · CV</span></figcaption>
+        </figure>
+        <div class="prose">
+          <p>I am a Geomatics Engineer with a strong interest in GIS, spatial data management, remote sensing, computer vision and artificial intelligence. I currently work as a <strong>GIS Lead | Developer</strong>, focusing on spatial analysis, automation, digital mapping and geodata pipelines.</p>
+          <p>I build geospatial solutions that combine engineering, data science and software development: spatial data models, attribute and geometry editing systems, enterprise GIS setups, automated workflows, quality control tools and visualization dashboards.</p>
+          <p>I also write Python geoprocessing tools, machine learning pipelines, imagery analysis, feature extraction systems and location-intelligence applications.</p>
+          <ul class="focus-tags" aria-label="Focus areas">
+            <li>Spatial analysis</li><li>Remote sensing</li><li>Computer vision</li><li>Geodata pipelines</li><li>Enterprise GIS</li><li>Machine learning</li>
+          </ul>
         </div>
       </div>
-
-      <div class="timeline-item">
-        <div class="timeline-date">Apr 2022 - Oct 2023</div>
-        <div class="timeline-content">
-          <h3>GIS Engineer | Developer</h3>
-          <p>Developed GIS applications, Python programming, indoor & outdoor mapping, GIS preparation, processing & analysis, location-based statistics, and design & styling.</p>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-date">2019-2020(Intern) / Jan 2022 - Mar 2022(Engineer)</div>
-        <div class="timeline-content">
-          <h3>Computer Vision Engineer</h3>
-          <p>Worked on computer vision, deep learning, machine learning, image processing, and programming.</p>
-        </div>
-      </div>
-      
     </div>
+  </section>
+
+  <section class="sheet" id="skills" aria-labelledby="skills-title">
+    <div class="wrap">
+      <div class="sheet-head">
+        <p class="eyebrow">Skills</p>
+        <h2 id="skills-title">From spatial data engineering to delivery</h2>
+        <p class="lede">My core technical skills cover spatial data engineering, software development, automation and project management.</p>
+      </div>
+      <div class="skills">
+        <article class="skill">
+          <img src="assets/python.webp" alt="" width="160" height="160" loading="lazy">
+          <div>
+            <h3 translate="no">Python Development</h3>
+            <ul>
+              <li>Geospatial automation and data pipelines</li>
+              <li>Image processing and computer vision</li>
+              <li>Machine learning and AI model development</li>
+              <li>Custom tools for GIS and remote sensing workflows</li>
+            </ul>
+          </div>
+        </article>
+        <article class="skill">
+          <img src="assets/gis.webp" alt="" width="160" height="160" loading="lazy">
+          <div>
+            <h3>GIS &amp; Remote Sensing</h3>
+            <ul>
+              <li>Advanced <span translate="no">QGIS</span> and <span translate="no">ArcGIS</span></li>
+              <li>Tool and plugin development for automation</li>
+              <li>Spatial analysis and geoprocessing workflows</li>
+              <li>Imagery interpretation and remote sensing</li>
+              <li>Location-based applications and services</li>
+            </ul>
+          </div>
+        </article>
+        <article class="skill">
+          <img src="assets/cad.webp" alt="" width="160" height="160" loading="lazy">
+          <div>
+            <h3>CAD Engineering</h3>
+            <ul>
+              <li>Professional <span translate="no">AutoCAD</span> and <span translate="no">NetCAD</span></li>
+              <li>Drafting and technical drawing for engineering projects</li>
+              <li>Automation with <span translate="no">AutoLISP</span> scripting</li>
+            </ul>
+          </div>
+        </article>
+        <article class="skill">
+          <img src="assets/jira.webp" alt="" width="160" height="160" loading="lazy">
+          <div>
+            <h3>Project Management (<span translate="no">Jira</span>)</h3>
+            <ul>
+              <li>Project and task planning</li>
+              <li>Agile team coordination (Scrum, Kanban)</li>
+              <li>Boards, issue workflows and automation</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="experience" aria-labelledby="exp-title">
+    <div class="wrap">
+      <div class="sheet-head">
+        <p class="eyebrow">Education &amp; Experience</p>
+        <h2 id="exp-title">Seven years of mapping, code and imagery</h2>
+      </div>
+      <div class="split">
+        <div class="edu">
+          <h3 class="col-title">Education</h3>
+          <h4 class="school">Yıldız Technical University</h4>
+          <p class="meta">BSc &amp; MSc, Geomatics Engineering · 2016–2021</p>
+          <p>Focused on GIS, spatial data, remote sensing, programming, computer vision and AI.</p>
+          <div class="gpa"><b>3.31</b><span>GPA / 4.00</span></div>
+        </div>
+        <div>
+          <h3 class="col-title">Experience</h3>
+          <ol class="timeline">
+            <li class="job now">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <p class="when">Oct 2023 – Present<span class="badge">Current</span></p>
+                <h4>GIS Lead | Developer</h4>
+                <p>Project management, programming, GIS data preparation, processing and analysis.</p>
+              </div>
+            </li>
+            <li class="job">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <p class="when">Apr 2022 – Oct 2023</p>
+                <h4>GIS Engineer | Developer</h4>
+                <p>Built GIS applications in Python, indoor and outdoor mapping, data preparation, processing and analysis, location-based statistics, and map design and styling.</p>
+              </div>
+            </li>
+            <li class="job">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <p class="when">Jan 2022 – Mar 2022 · Engineer<br>2019 – 2020 · Intern</p>
+                <h4>Computer Vision Engineer</h4>
+                <p>Computer vision, deep learning, machine learning, image processing and programming.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="sheet-head">
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-title">Have a spatial problem to solve? Let’s talk.</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2l-8 5-8-5h16z"/></svg></span>
+          <div><span class="label">Email</span><a class="value" href="mailto:vecihikrtgl@gmail.com">vecihikrtgl@gmail.com</a></div>
+          <button class="copy" type="button" data-copy="vecihikrtgl@gmail.com" aria-label="Copy email address">Copy</button>
+        </div>
+        <div class="contact">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.55.57 1 1 0 011 1v3.4a1 1 0 01-1 1A18 18 0 013 6a1 1 0 011-1h3.4a1 1 0 011 1 11.36 11.36 0 00.57 3.55 1 1 0 01-.21 1.11z"/></svg></span>
+          <div><span class="label">Phone</span><a class="value mono" href="tel:+905057066589">+90&nbsp;505&nbsp;706&nbsp;65&nbsp;89</a></div>
+          <button class="copy" type="button" data-copy="+905057066589" aria-label="Copy phone number">Copy</button>
+        </div>
+        <div class="contact">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 11.001 5.001A2.5 2.5 0 014.98 3.5zM4 8h2v12H4zM8 8h2v1.71c.27-.5 1-1.71 2.72-1.71 2.94 0 3.48 1.93 3.48 4.43V20h-2v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2.01 1.36-2.01 2.75V20H8z"/></svg></span>
+          <div><span class="label">LinkedIn</span><a class="value" href="https://www.linkedin.com/in/vecihiasimkartoglu" target="_blank" rel="noopener">in/vecihiasimkartoglu</a></div>
+        </div>
+        <div class="contact">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg></span>
+          <div><span class="label">Location</span><span class="value">Turkey</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Vecihi Asım Kartoğlu</span>
+    <span>39.0°&nbsp;N · 35.0°&nbsp;E</span>
   </div>
-</section>
+</footer>
 
-<style>
-/* EDUCATION & EXPERIENCE STYLES */
-#education-experience {
-  padding: 20px 10%;
-  background: rgba(10,10,10,0.35);
-}
-@media(max-width:900px){
-  #education-experience { padding: 40px 5% 100px 5%; }
-}
-
-/* EDUCATION CARDS */
-.edu-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 800px;
-  margin: 30px auto 0 auto;
-}
-
-.edu-card {
-  background: rgba(20,20,20,0.45);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 12px;
-  padding: 24px;
-  transition: 0.25s ease;
-}
-
-.edu-card:hover {
-  background: var(--accent);
-  color: #fff;
-  transform: translateY(-4px);
-}
-
-.edu-card h3 {
-  margin: 0 0 6px 0;
-  font-size: 1.55rem;
-}
-
-.edu-card span {
-  font-size: 1.15rem;
-  color: var(--muted);
-}
-
-.edu-card p {
-  margin-top: 8px;
-  font-size: 1.2rem;
-  line-height: 1.5;
-}
-
-/* EXPERIENCE TIMELINE */
-.timeline {
-  position: relative;
-  max-width: 800px;
-  margin: 30px auto 0 auto;
-  padding-left: 20px;
-}
-
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 15px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: var(--accent);
-  border-radius: 2px;
-}
-
-.timeline-item {
-  position: relative;
-  margin-bottom: 30px;
-  padding-left: 30px;
-}
-
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: 7px;
-  top: 0;
-  width: 16px;
-  height: 16px;
-  background: var(--accent);
-  border-radius: 50%;
-  border: 2px solid #fff;
-}
-
-.timeline-date {
-  font-size: 1.1rem;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-
-.timeline-content h3 {
-  margin: 0 0 4px 0;
-  font-size: 1.35rem;
-}
-
-.timeline-content p {
-  margin: 0;
-  font-size: 1.1rem;
-  line-height: 1.5;
-  color: #fff;
-}
-
-/* MOBILE */
-@media(max-width: 700px){
-  .edu-cards, .timeline {
-    width: 100%;
-  }
-  .timeline-item {
-    padding-left: 25px;
-  }
-}
-</style>
+<nav class="tabbar" aria-label="Sections">
+  <ul>
+    <li><a href="#top" data-nav="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3z"/></svg>Home</a></li>
+    <li><a href="#about" data-nav="about"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>About</a></li>
+    <li><a href="#skills" data-nav="skills"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h2v2H3zm4 0h14v2H7zM3 11h2v2H3zm4 0h14v2H7zM3 17h2v2H3zm4 0h10v2H7z"/></svg>Skills</a></li>
+    <li><a href="#experience" data-nav="experience"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 8l11 5 9-4.09V16h2V8L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>Career</a></li>
+    <li><a href="#contact" data-nav="contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2l-8 5-8-5h16z"/></svg>Contact</a></li>
+  </ul>
+</nav>
 
 <script>
-/* typing animation */
-const texts=["Geomatics Engineer","GIS Engineer | Developer","Geospatial Data Scientist"];
-const dyn=document.getElementById("dynamic-part");
-let i=0, c=0;
-function type(){
-  let t=texts[i];
-  if(c<t.length){
-    dyn.textContent+=t[c++];
-    setTimeout(type,90);
-  }else setTimeout(erase,1500);
-}
-function erase(){
-  let t=texts[i];
-  if(c>0){
-    c--;
-    dyn.textContent=t.substring(0,c);
-    setTimeout(erase,45);
-  }else{
-    i=(i+1)%texts.length;
-    setTimeout(type,120);
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* globe: pause control, and paused by default for reduced motion */
+  var video = document.getElementById('globe-video');
+  var toggle = document.getElementById('globe-toggle');
+  var icoPause = document.getElementById('ico-pause'), icoPlay = document.getElementById('ico-play');
+  function setPaused(p){
+    if (p) { video.pause(); } else { var r = video.play(); if (r && r.catch) r.catch(function(){}); }
+    toggle.setAttribute('aria-pressed', String(p));
+    toggle.setAttribute('aria-label', p ? 'Play globe animation' : 'Pause globe animation');
+    icoPause.hidden = p; icoPlay.hidden = !p;
   }
-}
-type();
+  if (reduce) setPaused(true);
+  toggle.addEventListener('click', function(){ setPaused(!video.paused); });
 
-/* fade hero text */
-window.addEventListener("scroll",()=>{
-  const box=document.getElementById("text-container");
-  box.style.opacity = (window.scrollY > innerHeight*0.55) ? 0 : 1;
-});
+  /* typing role line */
+  var roles = ['GIS Lead | Developer', 'Geomatics Engineer', 'Geospatial Data Scientist'];
+  var el = document.getElementById('role-text');
+  if (!reduce) {
+    var i = 0, c = roles[0].length;
+    var erase = function(){ if (c > 0) { el.textContent = roles[i].slice(0, --c); setTimeout(erase, 40); } else { i = (i + 1) % roles.length; setTimeout(type, 200); } };
+    var type = function(){ if (c < roles[i].length) { el.textContent = roles[i].slice(0, ++c); setTimeout(type, 80); } else setTimeout(erase, 2200); };
+    setTimeout(erase, 2600);
+  }
 
-/* nav */
-function scrollToTop(){ window.scrollTo({top:0,behavior:"smooth"}); }
-function scrollToAbout(){ document.getElementById('about').scrollIntoView({behavior:"smooth"}); }
-function scrollToSkills(){ document.getElementById('skills').scrollIntoView({behavior:"smooth"}); }
-function scrollToEduExp() { document.getElementById('education-experience').scrollIntoView({behavior:"smooth"}); }
+  /* solid top bar after leaving the hero */
+  var bar = document.getElementById('topbar');
+  function onScroll(){ bar.classList.toggle('solid', window.scrollY > 40); }
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
 
+  /* active section in both navs */
+  var links = document.querySelectorAll('[data-nav]');
+  function setActive(id){ links.forEach(function(a){ if (a.dataset.nav === id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); }); }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) setActive(e.target.id); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['top','about','skills','experience','contact'].forEach(function(id){ var s = document.getElementById(id); if (s) io.observe(s); });
+  }
+
+  /* copy buttons */
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var text = btn.dataset.copy;
+      function done(){ btn.textContent = 'Copied'; btn.classList.add('done'); setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1800); }
+      function fallback(){ var v = btn.parentElement.querySelector('.value'); var r = document.createRange(); r.selectNodeContents(v); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+    });
+  });
+})();
 </script>
-
 </body>
 </html>
