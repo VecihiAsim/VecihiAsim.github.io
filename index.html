@@ -157,7 +157,9 @@ main{position:relative;z-index:1}
 .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--accent);margin-top:3px;display:grid;place-items:center;background:var(--ink)}
 .job.now .dot::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
 .when{font-family:var(--f-mono);font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
-.job h4{font-family:var(--f-display);font-size:var(--s2);font-weight:750;font-stretch:108%;line-height:1.25;margin:4px 0 8px}
+.job h4{font-family:var(--f-display);font-size:var(--s2);font-weight:750;font-stretch:108%;line-height:1.25;margin:4px 0 2px}
+.job .org{font-weight:600;color:var(--fg);margin-bottom:8px}
+.job .org .tag{font-weight:400;color:var(--muted)}
 .job p{color:var(--muted);max-width:60ch}
 .badge{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--fg);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;vertical-align:1px}
 
@@ -386,6 +388,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
               <div>
                 <p class="when">Oct 2023 – Present<span class="badge">Current</span></p>
                 <h4>GIS Lead | Developer</h4>
+                <p class="org"><span translate="no">Pointr</span> <span class="tag">· The Deep Location Company</span></p>
                 <p>Project management, programming, GIS data preparation, processing and analysis.</p>
               </div>
             </li>
@@ -394,6 +397,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
               <div>
                 <p class="when">Apr 2022 – Oct 2023</p>
                 <h4>GIS Engineer | Developer</h4>
+                <p class="org"><span translate="no">Pointr</span> <span class="tag">· The Deep Location Company</span></p>
                 <p>Built GIS applications in Python, indoor and outdoor mapping, data preparation, processing and analysis, location-based statistics, and map design and styling.</p>
               </div>
             </li>
@@ -402,6 +406,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
               <div>
                 <p class="when">Jan 2022 – Mar 2022 · Engineer<br>2019 – 2020 · Intern</p>
                 <h4>Computer Vision Engineer</h4>
+                <p class="org"><span translate="no">AYVOS</span> Information Technologies</p>
                 <p>Computer vision, deep learning, machine learning, image processing and programming.</p>
               </div>
             </li>
